@@ -1,4 +1,4 @@
-const { MessagesArchive } = require('./History')
+const { MessagesArchive } = require('./mongoSchemas')
 
 class Room {
 	constructor(roomId, title, privateRoom = false) {
@@ -6,10 +6,13 @@ class Room {
 		this.title = title
 		this.privateRoom = privateRoom
 		this.history = []
+		this.users = new Set()
 	}
+
 	addMessage(message) {
 		this.history.push(message)
 	}
+
 	clearHistory() {
 		this.history = []
 	}

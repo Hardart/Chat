@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
+const { Users } = require('../schema/mongoSchemas')
 
 router.get('/', async (req, res) => {
 	let name = ''
@@ -17,8 +18,13 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-	const userName = req.body.name
-	const token = jwt.sign({ name: userName }, process.env.SECRET_TOKEN)
+	const { id, name } = req.body
+	const userToSave = new Users({
+		_id: id,
+		username: name,
+	})
+	await userToSave.save()
+	const token = jwt.sign({ id: id, name: name }, process.env.SECRET_TOKEN)
 
 	res.cookie('access', token, { httpOnly: true, expires: new Date(Date.now() + 86400e3) })
 	res.send({ callback: 'ok' })
