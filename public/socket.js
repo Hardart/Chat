@@ -63,37 +63,3 @@ function newMessage(msg) {
 		</div>
 	</li>`
 }
-/*
-// получаем от сервера с массив со всеми Namespaces
-socket.on('nsList', (nsData) => {
-	let namespacesDiv = document.querySelector('.namespaces')
-	namespacesDiv.innerHTML = ''
-	nsData.forEach((ns) => {
-		namespacesDiv.innerHTML += `<div class="namespace${ns.active}" ns=${ns.endpoint} ><img src="${ns.img}" /></div>`
-	})
-
-	// вешаем обработчик Клика на одну из NS и получает список комнат
-	const nsItems = document.querySelectorAll('.namespace')
-	const activeel = activeElement(nsItems)
-
-	nsItems.forEach((nsItem) => {
-		nsItem.onclick = () => {
-			Array.from(nsItems)
-				.find((el) => el.classList.contains('active'))
-				.classList.remove('active')
-			nsItem.classList.add('active')
-			const nsEndpoint = nsItem.getAttribute('ns')
-			joinNS(nsEndpoint)
-		}
-	})
-
-	joinNS(activeel.getAttribute('ns'))
-})
-
-function activeElement(elements) {
-	const el = Array.from(elements).find((el) => el.classList.contains('active'))
-	if (el) return el
-	elements[0].classList.add('active')
-	return elements[0]
-}
-*/
