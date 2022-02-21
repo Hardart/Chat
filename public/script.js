@@ -1,27 +1,34 @@
 const loginButton = document.querySelector('.login-form')
 const logoutButton = document.querySelector('.exit')
 
-if (loginButton) {
-	loginButton.onsubmit = (e) => {
-		e.preventDefault()
-		const userName = document.querySelector('.name')
-		userName.value = userName.value.trim()
-		sendRequest('post', '/', { name: userName.value }).then((res) => {
-			const closeModal = document.querySelector('#modal-full')
-			const titleBlock = document.querySelector('.chat-title-block')
-			titleBlock.children[0].insertAdjacentHTML('afterend', setupUserName(userName))
-			closeModal.classList.remove('uk-open', 'uk-flex')
-			const logoutButton = document.querySelector('.exit')
-			tapLogout(logoutButton)
-		})
+socket.on('connect', () => {
+	if (loginButton) {
+		loginButton.onsubmit = (e) => {
+			e.preventDefault()
+			const userName = document.querySelector('.name')
+			userName.value = userName.value.trim()
+
+			const user = {
+				id: socket.id,
+				name: userName.value,
+			}
+			sendRequest('post', '/', user).then((res) => {
+				const closeModal = document.querySelector('#modal-full')
+				const titleBlock = document.querySelector('.chat-title-block')
+				titleBlock.children[0].insertAdjacentHTML('afterend', setupUserName(userName))
+				closeModal.classList.remove('uk-open', 'uk-flex')
+				const logoutButton = document.querySelector('.exit')
+				tapLogout(logoutButton)
+			})
+		}
 	}
-}
+})
 
 if (logoutButton) {
 	tapLogout(logoutButton)
 }
 
-function tapLogout(btn){
+function tapLogout(btn) {
 	btn.onclick = () => {
 		sendRequest('post', '/logout').then((res) => {
 			if (res.callback == 'ok') {
