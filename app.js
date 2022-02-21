@@ -46,7 +46,7 @@ start()
 io.on('connection', async (socket) => {
 	let count = io.engine.clientsCount
 	io.emit('clients-count', count)
-	console.log(socket.handshake.headers.cookie)
+	
 	socket.join(mainRoom.title)
 
 	socket.on('disconnect', () => {

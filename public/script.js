@@ -11,12 +11,18 @@ if (loginButton) {
 			const titleBlock = document.querySelector('.chat-title-block')
 			titleBlock.children[0].insertAdjacentHTML('afterend', setupUserName(userName))
 			closeModal.classList.remove('uk-open', 'uk-flex')
+			const logoutButton = document.querySelector('.exit')
+			tapLogout(logoutButton)
 		})
 	}
 }
 
 if (logoutButton) {
-	logoutButton.onclick = () => {
+	tapLogout(logoutButton)
+}
+
+function tapLogout(btn){
+	btn.onclick = () => {
 		sendRequest('post', '/logout').then((res) => {
 			if (res.callback == 'ok') {
 				window.location = './'

@@ -1,7 +1,7 @@
 <html lang="en">
 	<%- include('./partials/header'); -%>
 	<body>
-		<main class="uk-container uk-container-large">
+		<main class="uk-container uk-container-large" >
 			<% if(!name) {%>
 			<div id="modal-full" class="uk-open uk-flex uk-flex-center uk-flex-middle" uk-modal>
 				<div class="uk-card uk-card-primary uk-card-round uk-padding">
@@ -18,8 +18,8 @@
 				</div>
 			</div>
 			<% } %>
-			<div class="uk-width-expand uk-flex" uk-height-viewport>
-				<div class="uk-width-expand uk-padding chat-panel uk-flex uk-flex-column">
+			<div class="uk-width-expand uk-flex uk-height-1-1">
+				<div class="uk-width-expand chat-panel uk-flex uk-flex-column">
 					<div class="uk-flex uk-flex-between uk-light chat-title-block">
 						<h3 class="uk-margin-remove">Чат</h3>
 						<% if(name) {%>
@@ -40,7 +40,7 @@
 						</div>
 					</div>
 					<div class="uk-margin-auto-top">
-						<form class="uk-flex message-form uk-margin-remove">
+						<form class="uk-flex message-form">
 							<input class="uk-input uk-width-expand chat-input" type="text" placeholder="Введите сообщение" />
 							<button class="uk-button uk-button-primary uk-width-auto uk-light" type="submit">Отправить</button>
 						</form>
