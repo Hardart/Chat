@@ -19,6 +19,7 @@ socket.on('sendMessage', (msg) => {
 })
 
 socket.on('messageHistory', (historyArr) => {
+	messageList.innerHTML = ''
 	historyArr.forEach((msg) => {
 		messageList.innerHTML += newMessage(msg)
 	})
