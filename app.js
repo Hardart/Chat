@@ -4,6 +4,7 @@ const app = express()
 const server = require('http').Server(app)
 const mongoose = require('mongoose')
 const io = require('socket.io')(server)
+var cors = require('cors')
 const PORT = process.env.PORT || 3000
 
 const cookieParser = require('cookie-parser')
@@ -22,10 +23,11 @@ app.use(express.json())
 app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
+app.use(cors())
 io.use(wrap(cookieParser()))
 
 app.use('/', indexRoute)
-app.use('/login', authRoute)
+app.use('/verify', authRoute)
 app.use('*', otherRoute)
 
 async function start() {
