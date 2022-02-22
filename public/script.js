@@ -13,6 +13,9 @@ socket.on('connect', () => {
 				name: userName.value,
 			}
 			sendRequest('post', '/', user).then((res) => {
+				const usersCount = document.querySelector('.users-count')
+				if (!res.status) return
+				usersCount.innerText = res.users
 				const closeModal = document.querySelector('#modal-full')
 				const titleBlock = document.querySelector('.chat-title-block')
 				titleBlock.children[0].insertAdjacentHTML('afterend', setupUserName(userName))
@@ -30,6 +33,7 @@ if (logoutButton) {
 
 function tapLogout(btn) {
 	btn.onclick = () => {
+		socket.emit('logout')
 		sendRequest('post', '/logout').then((res) => {
 			if (res.callback == 'ok') {
 				window.location = './'
