@@ -1,0 +1,17 @@
+<html lang="en">
+	<%- include('./partials/header'); -%>
+	<body>
+		<main class="uk-container uk-container-large">
+			<div class="uk-card uk-card-primary uk-card-body uk-text-center">
+				<a class="uk-button uk-button-default vkAuth">войти с помощью vk</a>
+			</div>
+		</main>
+
+		<script type="text/javascript">
+			VK.init({
+				apiId: 8086306,
+			})
+		</script>
+		<script src="/scriptAuth.js"></script>
+	</body>
+</html>

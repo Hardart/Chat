@@ -13,6 +13,7 @@ const jwt = require('jsonwebtoken')
 const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next)
 
 const indexRoute = require('./routes/index')
+const authRoute = require('./routes/auth')
 const otherRoute = require('./routes/404')
 
 app.set('views', './views')
@@ -24,6 +25,7 @@ app.use(cookieParser())
 io.use(wrap(cookieParser()))
 
 app.use('/', indexRoute)
+app.use('/login', authRoute)
 app.use('*', otherRoute)
 
 async function start() {
