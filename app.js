@@ -7,9 +7,8 @@ const io = require('socket.io')(server)
 const PORT = process.env.PORT || 3000
 
 const cookieParser = require('cookie-parser')
-const Room = require('./schema/Room')
-const { MessagesArchive, Users } = require('./schema/mongoSchemas')
-const mainRoom = new Room(0, 'main')
+
+const { MessagesArchive } = require('./schema/mongoSchemas')
 const jwt = require('jsonwebtoken')
 const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next)
 
@@ -48,18 +47,15 @@ async function start() {
 start()
 
 io.on('connection', async (socket) => {
-	let count = io.engine.clientsCount
+	const archive = require('./schema/Room')
 
-	const cookies = socket.request.cookies
-	const user = jwt.verify(cookies.access, process.env.SECRET_TOKEN)
-	mainRoom.users.add(user.id)
-	io.emit('clients-count', mainRoom.users.size)
+	io.emit('clients-count', archive.users.size)
 
-	socket.join(mainRoom.title)
+	socket.join(archive.title)
 
 	socket.on('disconnect', () => {
-		socket.leave(mainRoom.title)
-		socket.broadcast.emit('clients-disconnect', --count)
+		socket.leave(archive.title)
+		socket.broadcast.emit('clients-disconnect', archive.users.size)
 	})
 
 	socket.on('newMessage', async (data) => {
@@ -75,5 +71,5 @@ io.on('connection', async (socket) => {
 		io.emit('sendMessage', messageStruct)
 	})
 
-	socket.emit('messageHistory', await mainRoom.loadHistory())
+	socket.emit('messageHistory', await archive.loadHistory())
 })
