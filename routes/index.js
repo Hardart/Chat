@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
 const { Users } = require('../schema/mongoSchemas')
-const archive = require('../schema/Room')
+const room = require('../schema/Room')
 
 router.get('/', async (req, res) => {
 	let name = ''
@@ -20,24 +20,18 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
 	const { id, name } = req.body
-	const userToSave = new Users({
-		_id: id,
-		username: name,
-	})
-	archive.users.add(id)
-	await userToSave.save()
+	room.users.add(id)
 	const token = jwt.sign({ id: id, name: name }, process.env.SECRET_TOKEN)
 	res.cookie('access', token, { httpOnly: true, expires: new Date(Date.now() + 86400e3) })
-	res.send({ status: 'ok', users: archive.users.size })
+	res.send({ status: 'ok', users: room.users.size })
 })
 
 router.post('/logout', async (req, res) => {
 	if (req.cookies.access) {
 		const user = jwt.verify(req.cookies.access, process.env.SECRET_TOKEN)
-		archive.users.delete(user.id)
+		room.users.delete(user.id)
 	}
 	res.clearCookie('access')
-
 	res.send({ callback: 'ok' })
 })
 

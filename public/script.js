@@ -21,6 +21,7 @@ socket.on('connect', () => {
 				titleBlock.children[0].insertAdjacentHTML('afterend', setupUserName(userName))
 				closeModal.classList.remove('uk-open', 'uk-flex')
 				const logoutButton = document.querySelector('.exit')
+				socket.emit('user-login', userName.value)
 				tapLogout(logoutButton)
 			})
 		}

@@ -47,15 +47,16 @@ async function start() {
 start()
 
 io.on('connection', async (socket) => {
-	const archive = require('./schema/Room')
-
-	io.emit('clients-count', archive.users.size)
-
-	socket.join(archive.title)
+	const room = require('./schema/Room')
+	socket.on('user-login', (userName) => {
+		socket.broadcast.emit('client-login', { count: room.users.size, user: userName })
+	})
+	io.emit('clients-count', room.users.size)
+	socket.join(room.title)
 
 	socket.on('disconnect', () => {
-		socket.leave(archive.title)
-		socket.broadcast.emit('clients-disconnect', archive.users.size)
+		socket.leave(room.title)
+		socket.broadcast.emit('clients-disconnect', room.users.size)
 	})
 
 	socket.on('newMessage', async (data) => {
@@ -71,5 +72,5 @@ io.on('connection', async (socket) => {
 		io.emit('sendMessage', messageStruct)
 	})
 
-	socket.emit('messageHistory', await archive.loadHistory())
+	socket.emit('messageHistory', await room.loadHistory())
 })

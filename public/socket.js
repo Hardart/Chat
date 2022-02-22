@@ -8,6 +8,11 @@ socket.on('clients-count', (count) => {
 	clientsCount.innerText = count
 })
 
+socket.on('client-login', (data) => {
+	clientsCount.innerText = data.count
+	newUser(data.user)
+})
+
 socket.on('clients-disconnect', (count) => {
 	clientsCount.innerText = count
 })
@@ -62,4 +67,8 @@ function newMessage(msg) {
 			<p class="message-text">${msg.text}</p>
 		</div>
 	</li>`
+}
+
+function newUser(user) {
+	return UIkit.notification(`${user} зашел в чат`, { pos: 'top-right' })
 }

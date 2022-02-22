@@ -22,6 +22,6 @@ class Room {
 	}
 }
 
-const archive = new Room(0, 'main')
+const room = new Room(0, 'main')
 
-module.exports = archive
+module.exports = room
