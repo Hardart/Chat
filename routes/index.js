@@ -8,6 +8,7 @@ const room = require('../schema/Room')
 router.get('/', async (req, res) => {
 	if (req.cookies.access) {
 		const verifiedUser = jwt.verify(req.cookies.access, process.env.SECRET_TOKEN)
+		room.users.add(verifiedUser.id)
 		res.render('index', {
 			title: 'Чат',
 			name: verifiedUser.name,
@@ -18,11 +19,11 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-	const { id, name } = req.body
-	room.users.add(id)
-	const token = jwt.sign({ id: id, name: name }, process.env.SECRET_TOKEN)
-	res.cookie('access', token, { httpOnly: true, expires: new Date(Date.now() + 86400e3) })
-	res.send({ status: 'ok', users: room.users.size })
+	// const { id, name } = req.body
+	// room.users.add(id)
+	// const token = jwt.sign({ id: id, name: name }, process.env.SECRET_TOKEN)
+	// res.cookie('access', token, { httpOnly: true, expires: new Date(Date.now() + 86400e3) })
+	// res.send({ status: 'ok', users: room.users.size })
 })
 
 router.post('/logout', async (req, res) => {
