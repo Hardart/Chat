@@ -13,6 +13,15 @@ class Room {
 		this.history.push(message)
 	}
 
+	addUser(userObj) {
+		this.users.add(userObj)
+		let usersArr = []
+		this.users.forEach((user) => {
+			usersArr.push(user)
+		})
+		this.history = usersArr
+	}
+
 	clearHistory() {
 		this.history = []
 	}

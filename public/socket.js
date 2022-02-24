@@ -3,14 +3,12 @@ let nsSocket = ''
 const clientsCount = document.querySelector('.users-count')
 const messageForm = document.querySelector('.message-form')
 const messageList = document.querySelector('.messages')
+const usersOnline = document.querySelector('.users-online')
 
-socket.on('clients-count', (count) => {
-	clientsCount.innerText = count
-})
-
-socket.on('client-login', (data) => {
-	clientsCount.innerText = data.count
-	newUser(data.user)
+socket.on('clients-count', (array) => {
+	const users = JSON.parse(`{${array.join(',').split('=').join(':')}}`)
+	console.log(users)
+	clientsCount.innerText = array.length
 })
 
 socket.on('clients-disconnect', (count) => {
@@ -60,15 +58,11 @@ function newMessage(msg) {
 			<img src=${msg.avatar} width="40px" />
 		</div>
 		<div class="uk-width-expand message-body uk-light">
-			<h5 class="message-user-name">${msg.username} <span class="uk-text-small uk-text-muted">${new Date(msg.time).toLocaleString(
-		'ru',
-		options
-	)}</span></h5>
+			<h5 class="message-user-name">${msg.username} <span class="uk-text-small uk-text-muted">${new Date(msg.time).toLocaleString('ru', options)}</span></h5>
 			<p class="message-text">${msg.text}</p>
 		</div>
 	</li>`
 }
-
-function newUser(user) {
-	return UIkit.notification(`${user} зашел в чат`, { pos: 'top-right' })
+function newUser(name) {
+	return `<li>${name}</li>`
 }

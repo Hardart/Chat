@@ -2,7 +2,7 @@
 	<%- include('./partials/header'); -%>
 	<body>
 		<main class="uk-container uk-container-large">
-			<div class="uk-width-expand uk-flex uk-height-1-1">
+			<div class="uk-width-expand uk-grid-small uk-height-1-1" uk-grid>
 				<div class="uk-width-expand chat-panel uk-flex uk-flex-column">
 					<div class="uk-flex uk-flex-between uk-light chat-title-block">
 						<h3 class="uk-margin-remove">Чат</h3>
@@ -12,11 +12,6 @@
 							<a class="uk-margin-left uk-text-small exit">Выход</a>
 						</div>
 						<% } %>
-						<h3 class="uk-margin-remove">
-							<span class="room-title"></span>
-							<span>В сети:</span>
-							<span class="users-count"></span>
-						</h3>
 					</div>
 					<div class="messages-container uk-flex-1 uk-overflow-auto">
 						<div class="chat-wrap uk-position-absolute">
@@ -29,6 +24,15 @@
 							<button class="uk-button uk-button-primary uk-width-auto uk-light" type="submit">Отправить</button>
 						</form>
 					</div>
+				</div>
+				<div class="uk-width-1-6 uk-light users-panel">
+					<h3 class="uk-margin-remove">
+						Онлайн
+						<span>В сети:</span>
+						<span class="users-count"></span>
+					</h3>
+
+					<ul class="uk-list users-online"></ul>
 				</div>
 			</div>
 		</main>

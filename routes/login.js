@@ -31,15 +31,14 @@ router.get('/', async (req, res) => {
 
 	if (req.headers.authorization) {
 		const verifiedUser = jwt.verify(req.headers.authorization, process.env.SECRET_TOKEN)
-		const user = await Users.findOne({ mail: verifiedUser.email, password: verifiedUser.password })
+		const user = await Users.findOne({ email: verifiedUser.email })
 		if (user) {
 			const cookieToken = jwt.sign({ id: user._id, name: user.name }, process.env.SECRET_TOKEN)
-
 			return res.send({ callback: 'ok', token: cookieToken })
 		}
 		return res.send({ callback: 'error' })
 	}
-	
+
 	res.render('login', {
 		title: 'Авторизация',
 	})
@@ -47,8 +46,9 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
 	const { mail, password } = req.body
+
 	const token = jwt.sign({ email: mail, password: password }, process.env.SECRET_TOKEN)
-	const answer = await fetch(process.env.VK_REDIRECT_URL, {
+	const answer = await fetch(process.env.LOCAL_REDIRECT_URL, {
 		method: 'get',
 		headers: {
 			Authorization: token,

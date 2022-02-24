@@ -3,12 +3,12 @@ const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
 const { Users } = require('../schema/mongoSchemas')
-const room = require('../schema/Room')
 
 router.get('/', async (req, res) => {
 	if (req.cookies.access) {
+		const room = require('../schema/Room')
 		const verifiedUser = jwt.verify(req.cookies.access, process.env.SECRET_TOKEN)
-		room.users.add(verifiedUser.id)
+		room.addUser(`${verifiedUser.id}=${verifiedUser.name}`)
 		res.render('index', {
 			title: 'Чат',
 			name: verifiedUser.name,
