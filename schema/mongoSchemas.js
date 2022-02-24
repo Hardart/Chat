@@ -8,8 +8,9 @@ const messageSchema = mongoose.Schema({
 })
 
 const userSchema = mongoose.Schema({
-	_id: String,
-	username: String,
+	email: String,
+	name: String,
+	password: String,
 })
 
 module.exports = {

@@ -6,16 +6,15 @@ const { Users } = require('../schema/mongoSchemas')
 const room = require('../schema/Room')
 
 router.get('/', async (req, res) => {
-	let name = ''
 	if (req.cookies.access) {
 		const verifiedUser = jwt.verify(req.cookies.access, process.env.SECRET_TOKEN)
-		name = verifiedUser.name
+		res.render('index', {
+			title: 'Чат',
+			name: verifiedUser.name,
+		})
+	} else {
+		res.redirect('/login')
 	}
-
-	res.render('index', {
-		title: 'Чат',
-		name: name,
-	})
 })
 
 router.post('/', async (req, res) => {

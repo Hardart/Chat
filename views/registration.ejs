@@ -1,0 +1,39 @@
+<html lang="en">
+	<%- include('./partials/header'); -%>
+	<body>
+		<main class="uk-container uk-container-large uk-height-1-1 uk-flex uk-flex-middle uk-flex-center">
+			<div class="uk-width-1-3 uk-card uk-card-primary uk-card-body uk-text-center uk-margin-large-bottom">
+				<h2>Регистрация</h2>
+				<form action="/registration" method="post">
+					<div class="uk-margin">
+						<div class="uk-inline">
+							<span class="uk-form-icon" uk-icon="icon: mail"></span>
+							<input class="uk-input" name="email" type="email" placeholder="Почта" required />
+						</div>
+					</div>
+					<div class="uk-margin">
+						<div class="uk-inline">
+							<span class="uk-form-icon" uk-icon="icon: user"></span>
+							<input class="uk-input" name="name" type="text" placeholder="Имя" required />
+						</div>
+					</div>
+					<div class="uk-margin">
+						<div class="uk-inline">
+							<span class="uk-form-icon" uk-icon="icon: lock"></span>
+							<input class="uk-input" name="password" type="password" minlength="3" placeholder="Пароль" required />
+						</div>
+					</div>
+					<div class="uk-margin">
+						<div class="uk-inline">
+							<span class="uk-form-icon" uk-icon="icon: lock"></span>
+							<input class="uk-input" name="confirmation-password" type="password" placeholder="Повторите пароль" required />
+						</div>
+					</div>
+					<button class="uk-button uk-button-default uk-width-2-3">регистрация</button>
+				</form>
+				<a class="uk-link uk-width-1-1 uk-text-small" href="/login">войти</a>
+			</div>
+		</main>
+		<script src="/scriptAuth.js"></script>
+	</body>
+</html>

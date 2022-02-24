@@ -2,22 +2,6 @@
 	<%- include('./partials/header'); -%>
 	<body>
 		<main class="uk-container uk-container-large">
-			<% if(!name) {%>
-			<div id="modal-full" class="uk-open uk-flex uk-flex-center uk-flex-middle" uk-modal>
-				<div class="uk-card uk-card-primary uk-card-round uk-padding">
-					<form class="uk-margin-remove login-form">
-						<div class="uk-margin">
-							<div class="uk-inline uk-width-1-1">
-								<span class="uk-form-icon" uk-icon="icon: user"></span>
-								<input class="uk-input name" name="name" type="text" required />
-							</div>
-						</div>
-
-						<button class="uk-button uk-button-default uk-width-expand">Введите имя</button>
-					</form>
-				</div>
-			</div>
-			<% } %>
 			<div class="uk-width-expand uk-flex uk-height-1-1">
 				<div class="uk-width-expand chat-panel uk-flex uk-flex-column">
 					<div class="uk-flex uk-flex-between uk-light chat-title-block">

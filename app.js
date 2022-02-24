@@ -14,7 +14,8 @@ const jwt = require('jsonwebtoken')
 const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next)
 
 const indexRoute = require('./routes/index')
-const authRoute = require('./routes/auth')
+const loginRoute = require('./routes/login')
+const regRoute = require('./routes/registration')
 const otherRoute = require('./routes/404')
 
 app.set('views', './views')
@@ -27,7 +28,8 @@ app.use(cors())
 io.use(wrap(cookieParser()))
 
 app.use('/', indexRoute)
-app.use('/verify', authRoute)
+app.use('/login', loginRoute)
+app.use('/registration', regRoute)
 app.use('*', otherRoute)
 
 async function start() {
