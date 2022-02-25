@@ -5,14 +5,12 @@ const messageForm = document.querySelector('.message-form')
 const messageList = document.querySelector('.messages')
 const usersOnline = document.querySelector('.users-online')
 
-socket.on('clients-count', (array) => {
-	const users = JSON.parse(`{${array.join(',').split('=').join(':')}}`)
-	console.log(users)
-	clientsCount.innerText = array.length
+socket.on('clients-count', (users) => {
+	setUsersOnline(usersOnline, users, clientsCount)
 })
 
-socket.on('clients-disconnect', (count) => {
-	clientsCount.innerText = count
+socket.on('clients-disconnect', (users) => {
+	setUsersOnline(usersOnline, users, clientsCount)
 })
 
 socket.on('sendMessage', (msg) => {
@@ -66,3 +64,16 @@ function newMessage(msg) {
 function newUser(name) {
 	return `<li>${name}</li>`
 }
+
+function setUsersOnline(ulList, arrayOfUsers, clients) {
+	let arr = []
+	ulList.innerHTML = ''
+	arrayOfUsers.forEach((i) => {
+		const user = JSON.parse(`{"id":"${i.split('=').join('","name":"')}"}`)
+		ulList.innerHTML += newUser(user.name)
+		arr.push(user)
+	})
+	clients.innerText = arr.length
+}
+
+// ;`{"id":"${array.join(',').split('=').join('","name":"')}"}`

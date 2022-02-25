@@ -7,7 +7,8 @@ h3 span:not(.room-title) {
 	font-size: 0.87rem;
 }
 
-.messages-container {
+.messages-container,
+.users-container {
 	position: relative;
 	background-color: #424a52;
 }
@@ -31,4 +32,22 @@ li,
 
 .message-text {
 	font-size: 0.87rem;
+}
+
+.users-panel {
+	margin-bottom: 1em;
+}
+
+.users-online li:first-child {
+	margin-top: 5px;
+}
+
+.user-profile-container {
+	width: 100%;
+	height: 40px;
+	background-color: #4d5760;
+}
+
+.user-profile {
+	cursor: pointer;
 }

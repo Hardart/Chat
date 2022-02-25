@@ -52,14 +52,14 @@ async function start() {
 
 start()
 
-const room = require('./schema/Room')
 io.on('connection', async (socket) => {
+	const room = require('./schema/Room')
 	socket.join(room.title)
-	io.emit('clients-count', room.history)
+	io.emit('clients-count', [...room.users])
 
 	socket.on('disconnect', () => {
 		socket.leave(room.title)
-		socket.broadcast.emit('clients-disconnect', room.users.size)
+		socket.broadcast.emit('clients-disconnect', [...room.users])
 	})
 
 	socket.on('newMessage', async (data) => {

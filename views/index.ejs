@@ -1,17 +1,16 @@
 <html lang="en">
 	<%- include('./partials/header'); -%>
 	<body>
-		<main class="uk-container uk-container-large">
-			<div class="uk-width-expand uk-grid-small uk-height-1-1" uk-grid>
+		<main class="uk-container uk-container-expand">
+			<div class="uk-width-expand uk-grid-small uk-height-1-1 app-container" uk-grid>
 				<div class="uk-width-expand chat-panel uk-flex uk-flex-column">
 					<div class="uk-flex uk-flex-between uk-light chat-title-block">
 						<h3 class="uk-margin-remove">Чат</h3>
-						<% if(name) {%>
-						<div class="uk-flex uk-flex-middle">
-							<h3 id="user-name" class="uk-margin-remove"><%= name %></h3>
-							<a class="uk-margin-left uk-text-small exit">Выход</a>
-						</div>
-						<% } %>
+						<ul class="uk-iconnav uk-flex-middle">
+							<li class="users-panel-toggle">
+								<a><span uk-icon="icon: users"></span></a>
+							</li>
+						</ul>
 					</div>
 					<div class="messages-container uk-flex-1 uk-overflow-auto">
 						<div class="chat-wrap uk-position-absolute">
@@ -25,18 +24,23 @@
 						</form>
 					</div>
 				</div>
-				<div class="uk-width-1-6 uk-light users-panel">
+				<div class="uk-width-medium uk-light users-panel uk-flex uk-flex-column">
 					<h3 class="uk-margin-remove">
 						Онлайн
 						<span>В сети:</span>
 						<span class="users-count"></span>
 					</h3>
-
-					<ul class="uk-list users-online"></ul>
+					<div class="users-container uk-flex-1 uk-overflow-auto">
+						<ul class="uk-list users-online"></ul>
+					</div>
+					<div class="uk-flex uk-flex-middle user-profile-container">
+						<img class="uk-margin-small-left" src="img/placeholders/avatar.png" width="30" alt="" />
+						<!-- <span class="uk-icon uk-icon-image user-profile" uk-icon="ratio: 2" style="background-image: url(img/placeholders/avatar.png)"> </span> -->
+						<a class="uk-margin-left uk-text-small exit">Выход</a>
+					</div>
 				</div>
 			</div>
 		</main>
-
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/socket.js"></script>
 		<script src="/script.js"></script>
