@@ -16,6 +16,7 @@ const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, ne
 const indexRoute = require('./routes/index')
 const loginRoute = require('./routes/login')
 const regRoute = require('./routes/registration')
+const testRoute = require('./routes/test')
 const otherRoute = require('./routes/404')
 
 app.set('views', './views')
@@ -30,6 +31,7 @@ io.use(wrap(cookieParser()))
 app.use('/', indexRoute)
 app.use('/login', loginRoute)
 app.use('/registration', regRoute)
+app.use('/test', testRoute)
 app.use('*', otherRoute)
 
 async function start() {
