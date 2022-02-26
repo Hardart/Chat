@@ -13,7 +13,6 @@ valueElement.onmousedown = function (event) {
 
 	function moveAt(pageX) {
 		let moveLeft = pageX - shiftX - slider.getBoundingClientRect().left
-		// console.log(moveLeft)
 
 		let moveLefInPercent = (moveLeft * 100) / slider.clientWidth
 		if (moveLefInPercent < 0) {
@@ -47,18 +46,29 @@ valueElement.onmousedown = function (event) {
 	document.addEventListener('mouseup', onMouseUp)
 }
 
-let x = 0
-let y = 0
-
+let offsetX = 0
+let offsetY = 0
 avatar.onmousedown = function (event) {
-	let shiftX = event.clientX - x
-	let shiftY = event.clientY - y
+	let shiftX = event.clientX - offsetX
+	let shiftY = event.clientY - offsetY
 
+	const avatarWidth = avatar.getBoundingClientRect().width
+
+	const borderRight = avatarBorders.getBoundingClientRect().right
 	function moveAt(pageX, pageY) {
-		avatar.style.transform = `translate3d(${pageX - shiftX}px, ${pageY - shiftY}px, 0px)`
-		x = pageX - shiftX
-		y = pageY - shiftY
-		// console.log(moveH)
+		const avatarLeft = avatar.getBoundingClientRect().left
+		const borderLeft = avatarBorders.getBoundingClientRect().left
+		let posX = offsetX
+		let posY = pageY - shiftY
+		if (borderLeft - avatarLeft > 0) {
+			posX = pageX - shiftX
+		}
+
+		avatar.style.transform = `translate3d(${posX}px, ${posY}px, 0px)`
+		offsetX = posX
+		offsetY = posY
+		console.log()
+		// console.log(borderLeft, borderRight)
 	}
 
 	function onMouseMove(event) {
@@ -75,12 +85,54 @@ avatar.onmousedown = function (event) {
 	document.addEventListener('mouseup', onMouseUp)
 }
 
-avatar.onclick = (e) => {
-	let { x } = getTranslateValues(avatar)
-	console.log(x)
-	console.log('ClientX = ' + e.clientX)
-	console.log('LayerX = ' + e.layerX)
-}
+// avatar.onclick = (e) => {
+// 	const avatarLeft = avatar.getBoundingClientRect().left
+// 	const borderLeft = avatarBorders.getBoundingClientRect().left
+// 	console.log(avatarLeft, borderLeft)
+// 	if (avatarLeft <= borderLeft) console.log(true)
+// 	console.log(false)
+// 	// console.log('ClientX = ' + e.clientX)
+// 	// console.log('LayerX = ' + e.layerX)
+// }
 document.ondragstart = function () {
 	return false
+}
+
+function getTranslateValues(element) {
+	const style = window.getComputedStyle(element)
+	const matrix = style['transform'] || style.webkitTransform || style.mozTransform
+
+	// No transform property. Simply return 0 values.
+	if (matrix === 'none' || typeof matrix === 'undefined') {
+		return {
+			x: 0,
+			y: 0,
+			z: 0,
+		}
+	}
+
+	// Can either be 2d or 3d transform
+	const matrixType = matrix.includes('3d') ? '3d' : '2d'
+	const matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(', ')
+
+	// 2d matrices have 6 values
+	// Last 2 values are X and Y.
+	// 2d matrices does not have Z value.
+	if (matrixType === '2d') {
+		return {
+			x: matrixValues[4],
+			y: matrixValues[5],
+			z: 0,
+		}
+	}
+
+	// 3d matrices have 16 values
+	// The 13th, 14th, and 15th values are X, Y, and Z
+	if (matrixType === '3d') {
+		return {
+			x: matrixValues[12],
+			y: matrixValues[13],
+			z: matrixValues[14],
+		}
+	}
 }
