@@ -10,7 +10,7 @@ btn.onclick = (e) => {
 		}
 		return input.reportValidity()
 	})
-	if (isValidate) {
+	if (isValidate && inputs[2]) {
 		inputs[2].setCustomValidity('')
 		if (inputs[2].value.length >= 3 && inputs[2].value !== inputs[3].value) {
 			inputs[2].setCustomValidity('Пароли не совавдают')
