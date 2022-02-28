@@ -65,9 +65,6 @@ li,
 .image-enabled {
 	opacity: 1;
 	transform: translate3d(0px, 0px, 0px);
-	width: 324px;
-	min-width: 324px;
-	height: 324px;
 	cursor: grab;
 	pointer-events: all;
 	position: absolute;
@@ -84,8 +81,6 @@ li,
 	-webkit-box-shadow: rgba(47, 49, 54, 0.6) 0 0 0 9999px;
 	box-shadow: 0 0 0 9999px rgba(47, 49, 54, 0.6);
 	opacity: 1;
-	width: 324px;
-	height: 324px;
 }
 
 .slider-container {

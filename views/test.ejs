@@ -2,9 +2,13 @@
 	<%- include('./partials/header'); -%>
 	<body>
 		<main class="uk-container uk-container-expand">
-			<div class="uk-flex uk-flex-middle uk-flex-center uk-height-1-1"><%- include('./partials/select-avatar'); -%></div>
+			<div class="uk-flex uk-flex-middle uk-flex-center uk-height-1-1 avatar-block">
+				<%- include('./partials/upload-avatar'); -%>
+				<%- include('./partials/select-avatar'); -%>
+			</div>
 		</main>
 		<script src="/slider.js"></script>
 		<script src="/testScript.js"></script>
+		<script src="/upload-avatar.js"></script>
 	</body>
 </html>

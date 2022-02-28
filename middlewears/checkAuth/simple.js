@@ -1,4 +1,4 @@
-const { Users } = require('../schema/mongoSchemas')
+const { Users } = require('../../schema/mongoSchemas')
 const jwt = require('jsonwebtoken')
 
 async function simpleAuth(req, res, next) {

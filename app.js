@@ -4,20 +4,13 @@ const app = express()
 const server = require('http').Server(app)
 const mongoose = require('mongoose')
 const io = require('socket.io')(server)
-var cors = require('cors')
 const PORT = process.env.PORT || 3000
-
+const jwt = require('jsonwebtoken')
+const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
 const { MessagesArchive } = require('./schema/mongoSchemas')
-const jwt = require('jsonwebtoken')
 const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next)
-
-const indexRoute = require('./routes/index')
-const loginRoute = require('./routes/login')
-const regRoute = require('./routes/registration')
-const testRoute = require('./routes/test')
-const otherRoute = require('./routes/404')
 
 app.set('views', './views')
 app.set('view engine', 'ejs')
@@ -28,11 +21,11 @@ app.use(cookieParser())
 app.use(cors())
 io.use(wrap(cookieParser()))
 
-app.use('/', indexRoute)
-app.use('/login', loginRoute)
-app.use('/registration', regRoute)
-app.use('/test', testRoute)
-app.use('*', otherRoute)
+app.use('/', require('./routes/index'))
+app.use('/login', require('./routes/login'))
+app.use('/registration', require('./routes/registration'))
+app.use('/test', require('./routes/test'))
+app.use('*', require('./routes/404'))
 
 async function start() {
 	try {
