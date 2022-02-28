@@ -7,20 +7,41 @@ const avatarBorders = document.querySelector('.overlay-avatar')
 
 const avatarWidth = avatar.clientWidth
 const avatarHeight = avatar.clientHeight
+let posX = 0
+let posY = 0
+let imageScale = 0
 
 valueElement.onmousedown = function (event) {
 	let shiftX = event.clientX - valueElement.getBoundingClientRect().left
 
 	function moveAt(pageX) {
-		let moveLeft = pageX - shiftX - slider.getBoundingClientRect().left
+		const { x, y } = getTranslateValues(avatar)
 
+		let moveLeft = pageX - shiftX - slider.getBoundingClientRect().left
 		let moveLefInPercent = (moveLeft * 100) / slider.clientWidth
+
 		if (moveLefInPercent < 0) {
 			moveLefInPercent = moveLeft = 0
 		}
 		if (moveLefInPercent > 100) {
 			moveLefInPercent = 100
 			moveLeft = slider.clientWidth
+		}
+
+		imageScale = moveLeft / 2
+
+		if (imageScale < x) {
+			posX = imageScale
+		}
+		if (imageScale * -1 > x) {
+			posX = imageScale * -1
+		}
+
+		if (imageScale < y) {
+			posY = imageScale
+		}
+		if (imageScale * -1 > y) {
+			posY = imageScale * -1
 		}
 
 		avatar.style.width = avatarWidth + moveLeft
@@ -30,10 +51,11 @@ valueElement.onmousedown = function (event) {
 		valueElement.style.left = moveLefInPercent + '%'
 		barFill.style.width = moveLefInPercent + '%'
 		inputElement.setAttribute('value', Math.round(moveLefInPercent))
+		avatar.style.transform = `translate3d(${posX}px, ${posY}px, 0px)`
 	}
 
 	function onMouseMove(event) {
-		moveAt(event.clientX)
+		moveAt(event.pageX)
 	}
 
 	function onMouseUp() {
@@ -46,29 +68,30 @@ valueElement.onmousedown = function (event) {
 	document.addEventListener('mouseup', onMouseUp)
 }
 
-let offsetX = 0
-let offsetY = 0
 avatar.onmousedown = function (event) {
-	let shiftX = event.clientX - offsetX
-	let shiftY = event.clientY - offsetY
+	let shiftX = event.pageX - posX
+	let shiftY = event.pageY - posY
 
-	const avatarWidth = avatar.getBoundingClientRect().width
-
-	const borderRight = avatarBorders.getBoundingClientRect().right
 	function moveAt(pageX, pageY) {
-		const avatarLeft = avatar.getBoundingClientRect().left
-		const borderLeft = avatarBorders.getBoundingClientRect().left
-		let posX = offsetX
-		let posY = pageY - shiftY
-		if (borderLeft - avatarLeft > 0) {
-			posX = pageX - shiftX
+		posX = pageX - shiftX
+		posY = pageY - shiftY
+
+		if (imageScale <= posX) {
+			posX = imageScale
 		}
 
+		if (imageScale * -1 >= posX) {
+			posX = imageScale * -1
+		}
+
+		if (imageScale <= posY) {
+			posY = imageScale
+		}
+
+		if (imageScale * -1 >= posY) {
+			posY = imageScale * -1
+		}
 		avatar.style.transform = `translate3d(${posX}px, ${posY}px, 0px)`
-		offsetX = posX
-		offsetY = posY
-		console.log()
-		// console.log(borderLeft, borderRight)
 	}
 
 	function onMouseMove(event) {
@@ -85,15 +108,6 @@ avatar.onmousedown = function (event) {
 	document.addEventListener('mouseup', onMouseUp)
 }
 
-// avatar.onclick = (e) => {
-// 	const avatarLeft = avatar.getBoundingClientRect().left
-// 	const borderLeft = avatarBorders.getBoundingClientRect().left
-// 	console.log(avatarLeft, borderLeft)
-// 	if (avatarLeft <= borderLeft) console.log(true)
-// 	console.log(false)
-// 	// console.log('ClientX = ' + e.clientX)
-// 	// console.log('LayerX = ' + e.layerX)
-// }
 document.ondragstart = function () {
 	return false
 }
