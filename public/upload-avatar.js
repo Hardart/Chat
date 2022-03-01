@@ -30,16 +30,11 @@ function changeAvatar(image) {
 	let posX = 0
 	let posY = 0
 	let imageScale = 0
-	avatar.style.width = w
-	avatar.style.minWidth = w
-	avatar.style.height = h
-
+	const ratio = w / h
 	valueElement.onmousedown = function (event) {
 		let shiftX = event.clientX - valueElement.getBoundingClientRect().left
 
 		function moveAt(pageX) {
-			const { x, y } = getTranslateValues(avatar)
-
 			let moveLeft = pageX - shiftX - slider.getBoundingClientRect().left
 			let moveLefInPercent = (moveLeft * 100) / slider.clientWidth
 
@@ -53,29 +48,28 @@ function changeAvatar(image) {
 
 			imageScale = moveLeft / 2
 
-			if (imageScale < x - diffX) {
+			if (imageScale <= posX - diffX) {
 				posX = imageScale + diffX
 			}
-			if (imageScale * -1 > x + diffX) {
+			if (imageScale * -1 >= posX + diffX) {
 				posX = imageScale * -1 - diffX
 			}
-
-			if (imageScale < y - diffY) {
-				posY = imageScale + diffY
+			console.log(imageScale)
+			if (imageScale <= posY) {
+				posY = imageScale
 			}
-			if (imageScale * -1 > y + diffY) {
-				console.log(diffY)
+			if (imageScale * -1 >= posY + diffY) {
 				posY = imageScale * -1 - diffY
 			}
-
-			avatar.style.width = w + moveLeft
-			avatar.style.minWidth = w + moveLeft
-			avatar.style.height = h + moveLeft
+			avatar.style.transform = `translate3d(${posX}px, ${posY}px, 0px)`
 
 			valueElement.style.left = moveLefInPercent + '%'
 			barFill.style.width = moveLefInPercent + '%'
 			inputElement.setAttribute('value', Math.round(moveLefInPercent))
-			avatar.style.transform = `translate3d(${posX}px, ${posY}px, 0px)`
+
+			avatar.style.width = w + moveLeft
+			avatar.style.minWidth = w + moveLeft
+			// avatar.style.height = (w + moveLeft) / ratio
 		}
 
 		function onMouseMove(event) {
@@ -100,23 +94,7 @@ function changeAvatar(image) {
 			posX = pageX - shiftX
 			posY = pageY - shiftY
 
-			if (imageScale <= posX - diffX) {
-				posX = imageScale + diffX
-			}
-
-			if (imageScale * -1 >= posX + diffX) {
-				posX = imageScale * -1 - diffX
-			}
-
-			if (imageScale <= posY - diffY) {
-				posY = imageScale + diffY
-			}
-
-			if (imageScale * -1 >= posY + diffY) {
-				posY = imageScale * -1 - diffY
-			}
-
-			avatar.style.transform = `translate3d(${posX}px, ${posY}px, 0px)`
+			setPositionOfAvatar(posX, posY, diffX, diffY, imageScale, avatar, ratio)
 		}
 
 		function onMouseMove(event) {
@@ -144,26 +122,42 @@ function getSizeOfImage(image, avatar, border) {
 	let diffX = 0
 	let diffY = 0
 	const n = w >= h ? w : h
+	const b = w >= h ? h : w
 
 	switch (true) {
 		case n > 1800:
-			h /= 4
-			w /= 4
+			h /= 3.5
+			w /= 3.5
 			break
-		case n > 500:
+		case n > 600:
 			h /= 2
 			w /= 2
 			break
 	}
 
-	border.style.height = border.style.width = w
-	if (w < h) {
-		diffY = (h - w) / 2
-	}
-	if (w > h) {
-		diffX = (w - h) / 2
-		border.style.height = border.style.width = h
-	}
+	border.style.height = border.style.width = b
+	if (w < h) diffY = (h - w) / 2
+	if (w > h) diffX = (w - h) / 2
+	avatar.style.width = w
+	avatar.style.minWidth = w
+	// avatar.style.height = h
 
 	return { w, h, diffX, diffY }
+}
+
+function setPositionOfAvatar(posX, posY, diffX, diffY, imageScale, avatar, ratio) {
+	if (imageScale <= posX - diffX) {
+		posX = imageScale + diffX
+	}
+	if (imageScale * -1 >= posX + diffX) {
+		posX = imageScale * -1 - diffX
+	}
+
+	if (imageScale / ratio <= posY - diffY) {
+		posY = imageScale / ratio + diffY
+	}
+	if (imageScale * -1 >= posY + diffY) {
+		posY = imageScale * -1 - diffY
+	}
+	avatar.style.transform = `translate3d(${posX}px, ${posY}px, 0px)`
 }
