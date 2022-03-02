@@ -1,25 +1,36 @@
-import { Avatar } from './elements/Avatar.js'
-const input = document.querySelector('input')
+import Avatar from './elements/Avatar.js'
+import { sendFile } from './elements/request.js'
 
 input.onchange = async function () {
 	blockAvatar.insertAdjacentElement('beforeend', selectAvatar)
-
 	const data = new FormData()
 	data.append('avatar', input.files[0])
-	uploadAvatar.style.scale = 0.4
+
 	uploadAvatar.style.opacity = 0
 	uploadAvatar.style.transform = `scale(0.4)`
 	selectAvatar.style.transform = `scale(1.7)`
 	setTimeout(() => {
 		selectAvatar.style.opacity = 1
-		selectAvatar.style.scale = 1
 		selectAvatar.style.transform = `scale(1)`
 	}, 0)
 
 	const uploadedImage = await sendFile('post', '/test', data)
-
-	// console.log(input.files)
 	changeAvatar(uploadedImage)
+
+	this.value = ''
+}
+
+if (cancelSetupAvatar) {
+	cancelSetupAvatar.onclick = () => {
+		uploadAvatar.style.scale = 1
+		uploadAvatar.style.opacity = 1
+		uploadAvatar.style.transform = `scale(1)`
+		selectAvatar.style.opacity = 0
+		selectAvatar.style.transform = `scale(1.7)`
+		setTimeout(() => {
+			selectAvatar.remove()
+		}, 400)
+	}
 }
 
 function changeAvatar(image) {

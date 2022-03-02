@@ -15,3 +15,5 @@ async function sendFile(method, url, data) {
 		body: data,
 	}).then((res) => res.json())
 }
+
+export { sendRequest, sendFile }

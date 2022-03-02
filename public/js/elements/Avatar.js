@@ -1,4 +1,4 @@
-export class Avatar {
+export default class Avatar {
 	constructor(avatarElement, imageObj, borderElement) {
 		this.avatarElement = avatarElement
 		this.borderElement = borderElement
