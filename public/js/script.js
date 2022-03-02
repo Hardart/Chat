@@ -1,16 +1,22 @@
-const loginButton = document.querySelector('.login-form')
+import { sendRequest } from './elements/request.js'
+const app = document.getElementById('app')
+const chatApp = document.querySelector('.app-container')
+const usersAsidePanel = document.querySelector('.users-panel')
+const usersSetupPanel = document.querySelector('.user-setup-panel')
 const logoutButton = document.querySelector('.exit')
+const setupButton = document.querySelector('.setup')
 const usersToggleBtn = document.querySelector('.users-panel-toggle')
-const usersPanel = document.querySelector('.users-panel')
-const app = document.querySelector('.app-container')
+
+usersSetupPanel.remove()
 
 usersToggleBtn.onclick = () => {
-	usersPanel.classList.toggle('uk-hidden')
-	if (usersPanel.classList.contains('uk-hidden')) return usersPanel.remove()
-	app.insertAdjacentElement('beforeend', usersPanel)
+	usersAsidePanel.classList.toggle('uk-hidden')
+	if (usersAsidePanel.classList.contains('uk-hidden')) return usersAsidePanel.remove()
+	chatApp.insertAdjacentElement('beforeend', usersAsidePanel)
 }
 if (logoutButton) {
 	tapLogout(logoutButton)
+	enterSetupMenu(setupButton)
 }
 
 function tapLogout(btn) {
@@ -21,6 +27,13 @@ function tapLogout(btn) {
 				window.location = './'
 			}
 		})
+	}
+}
+
+function enterSetupMenu(btn) {
+	btn.onclick = () => {
+		app.insertAdjacentElement('afterbegin', usersSetupPanel)
+		usersSetupPanel.classList.remove('uk-hidden')
 	}
 }
 

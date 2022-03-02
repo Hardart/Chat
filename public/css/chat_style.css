@@ -48,7 +48,13 @@ li,
 	background-color: #4d5760;
 }
 
-.user-profile {
+.user-setup-panel {
+	z-index: 1;
+	background-color: #4d5760;
+}
+
+.user-setup-list li:not(.uk-nav-header) {
+	padding: 5px 0;
 	cursor: pointer;
 }
 
