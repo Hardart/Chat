@@ -1,14 +1,14 @@
 import { Avatar } from './elements/Avatar.js'
+const input = document.querySelector('input')
 
-uploadAvatar.onsubmit = async function (e) {
-	e.preventDefault()
-	const input = document.querySelector('input')
+input.onchange = async function () {
 	blockAvatar.insertAdjacentElement('beforeend', selectAvatar)
-	// selectAvatar.classList.remove('uk-hidden')
+
 	const data = new FormData()
 	data.append('avatar', input.files[0])
-	this.style.scale = 0.4
-	this.style.opacity = 0
+	uploadAvatar.style.scale = 0.4
+	uploadAvatar.style.opacity = 0
+	uploadAvatar.style.transform = `scale(0.4)`
 	selectAvatar.style.transform = `scale(1.7)`
 	setTimeout(() => {
 		selectAvatar.style.opacity = 1
