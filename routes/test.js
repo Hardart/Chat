@@ -10,13 +10,14 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', uploadFile.single('avatar'), async (req, res) => {
-	let file = req.file
-	let result = imageInfo('./' + file.path)
+	if (req.file) {
+		let file = req.file
+		let result = imageInfo('./' + file.path)
 
-	file.width = result.width
-	file.height = result.height
-
-	if (req.file) return res.json(file)
+		file.width = result.width
+		file.height = result.height
+		return res.json(file)
+	}
 	res.send({ status: 'error' })
 })
 
