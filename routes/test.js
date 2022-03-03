@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const uploadFile = require('../upload')
+const resizeFile = require('../sharp_test')
 const imageInfo = require('image-size')
 
 router.get('/', async (req, res) => {
@@ -9,7 +10,7 @@ router.get('/', async (req, res) => {
 	})
 })
 
-router.post('/', uploadFile.single('avatar'), async (req, res) => {
+router.post('/', uploadFile.single('avatar'), resizeFile, async (req, res) => {
 	if (req.file) {
 		let file = req.file
 		let result = imageInfo('./' + file.path)
