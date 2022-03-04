@@ -6,11 +6,10 @@ async function simpleAuth(req, res, next) {
 		const verifiedUser = jwt.verify(req.headers.authorization, process.env.SECRET_TOKEN)
 		const user = await Users.findOne({ email: verifiedUser.email, password: verifiedUser.password })
 
-		if (user) {
-			const cookieToken = jwt.sign({ id: user._id, name: user.name, avatar: user.avatar }, process.env.SECRET_TOKEN)
-			req.user = user
-			req.token = cookieToken
-		}
+		if (!user) return res.send({ callback: 'noUser' })
+		const cookieToken = jwt.sign({ id: user._id, name: user.name, avatar: user.avatar }, process.env.SECRET_TOKEN)
+		req.user = user
+		req.token = cookieToken
 	}
 	next()
 }

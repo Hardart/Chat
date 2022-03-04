@@ -1,3 +1,4 @@
 /views/test.ejs
 /views/
 # /classes
+.env

@@ -35,11 +35,16 @@
 						<ul class="uk-list users-online"></ul>
 					</div>
 					<div class="uk-flex uk-flex-middle user-profile-container">
+						
+						<img class="uk-margin-small-left" width="30" alt="" src=
 						<% if(avatar){ %>
-						<img class="uk-margin-small-left" src=<%= avatar %> width="30" alt="" />
+							<%= avatar %>
 						<% } else { %>
-							<img class="uk-margin-small-left" src="img/placeholders/avatar.png" width="30" alt="" />
-						<% } %> 
+							"img/placeholders/avatar.png"
+							<% } %> 
+						 />
+						
+						
 						<a class="uk-margin-left setup"><span uk-icon="icon: cog"></span></a>
 						<a class="uk-margin-left exit"><span uk-icon="icon: sign-out"></span></a>
 					</div>

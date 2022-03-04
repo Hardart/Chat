@@ -102,8 +102,13 @@ function changeAvatar(image) {
 	// кнопка Отправить аватар после коррекции пользователем
 	if (setupAvatarBtn) {
 		setupAvatarBtn.onclick = async function () {
-			const response = await sendRequest('post', '/test/avatarResize', { avatar: avatar })
-			console.log(response)
+			const oldPath = userAvatarImage.getAttribute('src')
+			const body = { avatar: avatar }
+			if (oldPath.match(/[^\/]+$/)[0] !== 'avatar.png') {
+				// console.log(oldPath.match(/[^\/]+$/))
+				body.oldPath = oldPath
+			}
+			const response = await sendRequest('post', '/test/avatarResize', body)
 			userAvatarImage.setAttribute('src', response.path)
 			animateSetupOpacity(uploadAvatar, selectAvatar, avatar)
 		}
@@ -111,7 +116,10 @@ function changeAvatar(image) {
 
 	// кнопка Отменить установку аватара
 	if (cancelSetupAvatarBtn) {
-		cancelSetupAvatarBtn.onclick = () => {
+		cancelSetupAvatarBtn.onclick = async function () {
+			const oldPath = avatarElement.getAttribute('src')
+
+			await sendRequest('post', '/test/avatarCancel', { path: oldPath })
 			animateSetupOpacity(uploadAvatar, selectAvatar, avatar)
 		}
 	}

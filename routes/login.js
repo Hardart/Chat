@@ -34,6 +34,9 @@ router.post('/', async (req, res) => {
 		case 'error':
 			res.redirect('/login')
 			break
+		case 'noUser':
+			res.send('пользователя нет в базе')
+			break
 	}
 })
 
