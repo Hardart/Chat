@@ -1,10 +1,11 @@
 import Avatar from './elements/Avatar.js'
-import { sendFile } from './elements/request.js'
+import { sendFile, sendRequest } from './elements/request.js'
 
-input.onchange = async function () {
-	blockAvatar.insertAdjacentElement('beforeend', selectAvatar)
+selectAvatarInput.onchange = async function () {
+	app.insertAdjacentElement('afterbegin', selectAvatar)
+	// console.log(this)
 	const data = new FormData()
-	data.append('avatar', input.files[0])
+	data.append('avatar', this.files[0])
 
 	uploadAvatar.style.opacity = 0
 	uploadAvatar.style.transform = `scale(0.4)`
@@ -14,23 +15,10 @@ input.onchange = async function () {
 		selectAvatar.style.transform = `scale(1)`
 	}, 0)
 
-	const uploadedImage = await sendFile('post', '/test', data)
+	const uploadedImage = await sendFile('post', '/test/avatarUpload', data)
 	changeAvatar(uploadedImage)
 
 	this.value = ''
-}
-
-if (cancelSetupAvatar) {
-	cancelSetupAvatar.onclick = () => {
-		uploadAvatar.style.scale = 1
-		uploadAvatar.style.opacity = 1
-		uploadAvatar.style.transform = `scale(1)`
-		selectAvatar.style.opacity = 0
-		selectAvatar.style.transform = `scale(1.7)`
-		setTimeout(() => {
-			selectAvatar.remove()
-		}, 400)
-	}
 }
 
 function changeAvatar(image) {
@@ -41,6 +29,7 @@ function changeAvatar(image) {
 	avatarElement.setAttribute('src', image.path.substring(6, image.path.length))
 
 	const avatar = new Avatar(avatarElement, image, avatarBorders)
+	avatar.path = image.path
 	avatar.calcSize()
 
 	valueElement.onmousedown = function (event) {
@@ -109,4 +98,33 @@ function changeAvatar(image) {
 	document.ondragstart = function () {
 		return false
 	}
+
+	// кнопка Отправить аватар после коррекции пользователем
+	if (setupAvatarBtn) {
+		setupAvatarBtn.onclick = async function () {
+			const response = await sendRequest('post', '/test/avatarResize', { avatar: avatar })
+			console.log(response)
+			userAvatarImage.setAttribute('src', response.path)
+			animateSetupOpacity(uploadAvatar, selectAvatar, avatar)
+		}
+	}
+
+	// кнопка Отменить установку аватара
+	if (cancelSetupAvatarBtn) {
+		cancelSetupAvatarBtn.onclick = () => {
+			animateSetupOpacity(uploadAvatar, selectAvatar, avatar)
+		}
+	}
+}
+
+function animateSetupOpacity(formUpload, selectAvatarPanel, avatarInstance) {
+	formUpload.style.scale = 1
+	formUpload.style.opacity = 1
+	formUpload.style.transform = `scale(1)`
+	selectAvatarPanel.style.opacity = 0
+	selectAvatarPanel.style.transform = `scale(1.7)`
+	avatarInstance.refreshSize()
+	setTimeout(() => {
+		selectAvatarPanel.remove()
+	}, 400)
 }

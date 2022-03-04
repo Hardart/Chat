@@ -48,6 +48,11 @@ li,
 	background-color: #4d5760;
 }
 
+.user-avatar img,
+.user-profile-container img {
+	border-radius: 50%;
+}
+
 .user-setup-panel {
 	z-index: 1;
 	background-color: #4d5760;
@@ -151,4 +156,8 @@ li,
 	box-shadow: 0 3px 1px 0 rgba(0, 0, 0, 0.05), 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 3px 0 rgba(0, 0, 0, 0.05);
 	cursor: ew-resize;
 	z-index: 1000;
+}
+
+.select-avatar {
+	z-index: 2;
 }

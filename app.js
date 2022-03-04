@@ -5,8 +5,6 @@ const server = require('http').Server(app)
 const mongoose = require('mongoose')
 const io = require('socket.io')(server)
 const PORT = process.env.PORT || 3000
-const jwt = require('jsonwebtoken')
-const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
 const { MessagesArchive } = require('./schema/mongoSchemas')
@@ -18,7 +16,6 @@ app.use(express.json())
 app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
-app.use(cors())
 io.use(wrap(cookieParser()))
 
 app.use('/', require('./routes/index'))

@@ -61,6 +61,7 @@ function newMessage(msg) {
 		</div>
 	</li>`
 }
+
 function newUser(name) {
 	return `<li>${name}</li>`
 }
@@ -75,5 +76,3 @@ function setUsersOnline(ulList, arrayOfUsers, clients) {
 	})
 	clients.innerText = arr.length
 }
-
-// ;`{"id":"${array.join(',').split('=').join('","name":"')}"}`

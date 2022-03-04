@@ -6,8 +6,8 @@ const simpleAuth = require('../middlewears/checkAuth/simple')
 const fetch = require('node-fetch')
 
 router.get('/', simpleAuth, async (req, res) => {
+	if (req.user) return res.send({ callback: 'ok', token: req.token })
 	if (req.cookies.access) return res.redirect('/')
-
 	res.render('login', {
 		title: 'Авторизация',
 	})

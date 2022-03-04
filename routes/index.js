@@ -2,7 +2,6 @@ require('dotenv').config()
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
-const { Users } = require('../schema/mongoSchemas')
 const room = require('../schema/Room')
 
 router.get('/', async (req, res) => {
@@ -13,6 +12,7 @@ router.get('/', async (req, res) => {
 		res.render('index', {
 			title: 'Чат',
 			name: verifiedUser.name,
+			avatar: verifiedUser.avatar.match(/public(.*)/)[1],
 		})
 	} else {
 		res.redirect('/login')

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const uploadFile = require('../upload')
-const resizeFile = require('../sharp_test')
+const uploadFile = require('../middlewears/avatar/uploadAvatar')
+const resizeFile = require('../middlewears/avatar/resizeAvatar')
 const imageInfo = require('image-size')
 
 router.get('/', async (req, res) => {
@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
 	})
 })
 
-router.post('/', uploadFile.single('avatar'), resizeFile, async (req, res) => {
+router.post('/avatarUpload', uploadFile.single('avatar'), async (req, res) => {
 	if (req.file) {
 		let file = req.file
 		let result = imageInfo('./' + file.path)
@@ -19,6 +19,11 @@ router.post('/', uploadFile.single('avatar'), resizeFile, async (req, res) => {
 		file.height = result.height
 		return res.json(file)
 	}
+	res.send({ status: 'error' })
+})
+
+router.post('/avatarResize', resizeFile, async (req, res) => {
+	if (req.resize) return res.send({ status: 'ok', path: req.resize.path })
 	res.send({ status: 'error' })
 })
 

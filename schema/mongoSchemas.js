@@ -11,6 +11,10 @@ const userSchema = mongoose.Schema({
 	email: String,
 	name: String,
 	password: String,
+	avatar: {
+		type: String,
+		default: '',
+	},
 })
 
 module.exports = {
