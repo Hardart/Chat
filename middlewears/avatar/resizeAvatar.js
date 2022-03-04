@@ -14,7 +14,7 @@ async function resize(req, res, next) {
 		const exctractLeft = Math.round((image.newW - image.borderWidth) / 2 - image.posX)
 		const verifiedUser = jwt.verify(req.cookies.access, process.env.SECRET_TOKEN)
 
-		await sharp(`./${image.path}`)
+		const buff = await sharp(`./${image.path}`)
 			.resize({
 				width: Math.ceil(image.newW),
 				height: Math.ceil(image.newH),
@@ -24,6 +24,13 @@ async function resize(req, res, next) {
 				top: exctractTop,
 				width: image.borderWidth,
 				height: image.borderWidth,
+			})
+			.toBuffer()
+
+		await sharp(buff)
+			.resize({
+				width: 200,
+				height: 200,
 			})
 			.toFile(newName)
 
