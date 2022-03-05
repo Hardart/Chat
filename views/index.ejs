@@ -3,17 +3,10 @@
 	<body>
 		<main id="app">
 			<%- include('./partials/select-avatar'); -%>
-			<%- include('./partials/user-settings'); -%>
+			<%- include('./partials/user-settings/settings-container'); -%>
 			<div class="uk-width-expand uk-flex uk-padding uk-height-1-1 chat-container">
 				<div class="uk-width-expand chat-panel uk-flex uk-flex-column">
-					<div class="uk-flex uk-flex-between uk-light chat-title-block">
-						<h3 class="uk-margin-remove">Чат</h3>
-						<ul class="uk-iconnav uk-flex-middle">
-							<li class="users-panel-toggle">
-								<a><span uk-icon="icon: users"></span></a>
-							</li>
-						</ul>
-					</div>
+					<%- include('./partials/chat/header-chat-panel'); -%>
 					<%- include('./partials/chat/messages-panel'); -%>
 					<%- include('./partials/chat/send-message-form'); -%>
 				</div>

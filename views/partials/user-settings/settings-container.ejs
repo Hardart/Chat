@@ -1,4 +1,5 @@
 <div class="uk-width-expand uk-height-1-1 uk-position-absolute settings-container uk-light uk-hidden">
+	<%- include('./avatar-upload-input'); -%>
 	<button class="uk-modal-close-default uk-margin-medium-top uk-margin-medium-right" type="button" uk-close></button>
 	<div class="uk-container">
 		<div class="uk-grid" uk-gird>
@@ -17,21 +18,7 @@
 					<li>пункт меню 10</li>
 				</ul>
 			</div>
-			<div class="uk-width-expand uk-flex uk-flex-column uk-padding-large">
-				<h2>Моя учётная запись</h2>
-				<div class="uk-card">
-					<div class="uk-card-header">
-						<div class="uk-border-circle uk-width-small uk-height-small uk-background-muted user-avatar">
-							<img src= <%= avatar %> width="150px" alt="" />
-						</div>
-					</div>
-					<div class="uk-card-body">
-						<h3 class="uk-user-name">Ваше имя: <span><%= username %></span> </h3>
-						<h3 class="uk-user-chat-id">Ваш ID: <span><%= chatId %></span> </h3>
-					</div>
-				</div>
-				<div class="avatar-block"><%- include('./upload-avatar'); -%></div>
-			</div>
+			<%- include('./my-account'); -%>
 		</div>
 	</div>
 </div>
