@@ -2,7 +2,6 @@ const socket = io()
 let nsSocket = ''
 const clientsCount = document.querySelector('.users-count')
 const messageForm = document.querySelector('.message-form')
-const messageList = document.querySelector('.messages')
 const usersOnline = document.querySelector('.users-online')
 
 socket.on('clients-count', (users) => {
@@ -34,11 +33,10 @@ messageForm.addEventListener('submit', clickSubmitBtn)
 
 function clickSubmitBtn(e) {
 	e.preventDefault()
-	const userName = document.querySelector('#user-name').innerText
 	const chatInput = document.querySelector('.chat-input')
 
 	if (chatInput.value.trim() != '') {
-		socket.emit('newMessage', { text: chatInput.value, username: userName })
+		socket.emit('newMessage', { userId: userChatID.innerText, text: chatInput.value, username: userName.innerText, avatar: userAvatarBig.getAttribute('src') })
 		chatInput.value = ''
 	}
 }
@@ -52,7 +50,7 @@ function newMessage(msg) {
 	}
 
 	return `<li class="uk-flex">
-		<div class="uk-width-auto">
+		<div class="uk-width-auto ">
 			<img src=${msg.avatar} width="40px" />
 		</div>
 		<div class="uk-width-expand message-body uk-light">

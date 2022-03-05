@@ -18,20 +18,13 @@ router.get('/', async (req, res) => {
 		}
 		res.render('index', {
 			title: 'Чат',
-			name: verifiedUser.name,
+			username: verifiedUser.name,
 			avatar: avatar,
+			chatId: verifiedUser.chatId,
 		})
 	} else {
 		res.redirect('/login')
 	}
-})
-
-router.post('/', async (req, res) => {
-	// const { id, name } = req.body
-	// room.users.add(id)
-	// const token = jwt.sign({ id: id, name: name }, process.env.SECRET_TOKEN)
-	// res.cookie('access', token, { httpOnly: true, expires: new Date(Date.now() + 86400e3) })
-	// res.send({ status: 'ok', users: room.users.size })
 })
 
 router.post('/logout', async (req, res) => {

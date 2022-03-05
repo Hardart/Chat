@@ -2,7 +2,7 @@ require('dotenv').config()
 const sharp = require('sharp')
 const fs = require('fs')
 const jwt = require('jsonwebtoken')
-const { Users } = require('../../schema/mongoSchemas')
+const { Users, MessagesArchive } = require('../../schema/mongoSchemas')
 
 async function resize(req, res, next) {
 	if (req.body.avatar) {
@@ -22,8 +22,8 @@ async function resize(req, res, next) {
 			.extract({
 				left: exctractLeft,
 				top: exctractTop,
-				width: image.borderWidth,
-				height: image.borderWidth,
+				width: Math.round(image.borderWidth),
+				height: Math.round(image.borderWidth),
 			})
 			.toBuffer()
 
@@ -39,8 +39,9 @@ async function resize(req, res, next) {
 		const user = await Users.findOne({ _id: verifiedUser.id })
 		user.avatar = req.resize.path
 		await user.save()
-		req.resize.token = jwt.sign({ id: user._id, name: user.name, avatar: user.avatar }, process.env.SECRET_TOKEN)
+		req.resize.token = jwt.sign({ id: user._id, name: user.name, avatar: user.avatar, chatId: req.body.userId }, process.env.SECRET_TOKEN)
 		res.cookie('access', req.resize.token, { httpOnly: true, expires: new Date(Date.now() + 86400e3) })
+		await MessagesArchive.updateMany({ userId: req.body.userId }, { avatar: req.resize.path })
 	}
 
 	next()

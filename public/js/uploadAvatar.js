@@ -1,19 +1,14 @@
-import Avatar from './elements/Avatar.js'
-import { sendFile, sendRequest } from './elements/request.js'
+import Avatar from './classes/Avatar.js'
+import Visibility from './classes/Visibility.js'
+import { sendFile, sendRequest } from './network/request.js'
+const panel = new Visibility()
 
 selectAvatarInput.onchange = async function () {
-	app.insertAdjacentElement('afterbegin', selectAvatar)
 	// console.log(this)
 	const data = new FormData()
 	data.append('avatar', this.files[0])
 
-	uploadAvatar.style.opacity = 0
-	uploadAvatar.style.transform = `scale(0.4)`
-	selectAvatar.style.transform = `scale(1.7)`
-	setTimeout(() => {
-		selectAvatar.style.opacity = 1
-		selectAvatar.style.transform = `scale(1)`
-	}, 0)
+	panel.show(selectAvatar, usersSettingsPanel)
 
 	const uploadedImage = await sendFile('post', '/test/avatarUpload', data)
 	changeAvatar(uploadedImage)
@@ -102,15 +97,22 @@ function changeAvatar(image) {
 	// кнопка Отправить аватар после коррекции пользователем
 	if (setupAvatarBtn) {
 		setupAvatarBtn.onclick = async function () {
-			const oldPath = userAvatarImage.getAttribute('src')
-			const body = { avatar: avatar }
+			const oldPath = userAvatarBig.getAttribute('src')
+			const body = { avatar: avatar, userId: userChatID.innerText }
 			if (oldPath.match(/[^\/]+$/)[0] !== 'avatar.png') {
-				// console.log(oldPath.match(/[^\/]+$/))
 				body.oldPath = oldPath
 			}
+
 			const response = await sendRequest('post', '/test/avatarResize', body)
-			userAvatarImage.setAttribute('src', response.path)
-			animateSetupOpacity(uploadAvatar, selectAvatar, avatar)
+			userAvatarBig.setAttribute('src', response.path)
+			userAvatarSmall.setAttribute('src', response.path)
+			const imageList = [...messageList.querySelectorAll('img')]
+
+			imageList.forEach((img) => {
+				const path = img.getAttribute('src')
+				if (path == oldPath) img.setAttribute('src', response.path)
+			})
+			panel.hide(usersSettingsPanel, selectAvatar)
 		}
 	}
 
@@ -120,19 +122,7 @@ function changeAvatar(image) {
 			const oldPath = avatarElement.getAttribute('src')
 
 			await sendRequest('post', '/test/avatarCancel', { path: oldPath })
-			animateSetupOpacity(uploadAvatar, selectAvatar, avatar)
+			panel.hide(usersSettingsPanel, selectAvatar)
 		}
 	}
-}
-
-function animateSetupOpacity(formUpload, selectAvatarPanel, avatarInstance) {
-	formUpload.style.scale = 1
-	formUpload.style.opacity = 1
-	formUpload.style.transform = `scale(1)`
-	selectAvatarPanel.style.opacity = 0
-	selectAvatarPanel.style.transform = `scale(1.7)`
-	avatarInstance.refreshSize()
-	setTimeout(() => {
-		selectAvatarPanel.remove()
-	}, 400)
 }

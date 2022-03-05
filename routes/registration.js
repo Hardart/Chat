@@ -11,10 +11,12 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
 	const { email, name, password } = req.body
+	let chatID = await Users.count()
 	const user = new Users({
 		email: email,
 		name: name,
 		password: password,
+		chatId: `#${chatID + 1}`,
 	})
 
 	await user.save()

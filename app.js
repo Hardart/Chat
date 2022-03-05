@@ -7,7 +7,7 @@ const io = require('socket.io')(server)
 const PORT = process.env.PORT || 3000
 const cookieParser = require('cookie-parser')
 
-const { MessagesArchive } = require('./schema/mongoSchemas')
+const { MessagesArchive, Users } = require('./schema/mongoSchemas')
 const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next)
 
 app.set('views', './views')
@@ -56,10 +56,11 @@ io.on('connection', async (socket) => {
 
 	socket.on('newMessage', async (data) => {
 		const messageStruct = new MessagesArchive({
+			userId: data.userId,
 			username: data.username,
 			time: new Date(),
 			text: data.text,
-			avatar: 'https://via.placeholder.com/30',
+			avatar: data.avatar,
 		})
 
 		await messageStruct.save()

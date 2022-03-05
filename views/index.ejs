@@ -2,8 +2,9 @@
 	<%- include('./partials/header'); -%>
 	<body>
 		<main id="app">
-			<%- include('./partials/select-avatar'); -%> <%- include('./partials/user-setup'); -%>
-			<div class="uk-width-expand uk-flex uk-padding uk-height-1-1 app-container">
+			<%- include('./partials/select-avatar'); -%>
+			<%- include('./partials/user-settings'); -%>
+			<div class="uk-width-expand uk-flex uk-padding uk-height-1-1 chat-container">
 				<div class="uk-width-expand chat-panel uk-flex uk-flex-column">
 					<div class="uk-flex uk-flex-between uk-light chat-title-block">
 						<h3 class="uk-margin-remove">Чат</h3>
@@ -13,49 +14,17 @@
 							</li>
 						</ul>
 					</div>
-					<div class="messages-container uk-flex-1 uk-overflow-auto">
-						<div class="chat-wrap uk-position-absolute">
-							<ul class="uk-list messages"></ul>
-						</div>
-					</div>
-					<div class="uk-margin-auto-top">
-						<form class="uk-flex message-form">
-							<input class="uk-input uk-width-expand chat-input" type="text" placeholder="Введите сообщение" />
-							<button class="uk-button uk-button-primary uk-width-auto uk-light" type="submit">Отправить</button>
-						</form>
-					</div>
+					<%- include('./partials/chat/messages-panel'); -%>
+					<%- include('./partials/chat/send-message-form'); -%>
 				</div>
-				<div class="uk-width-medium uk-light users-panel uk-flex uk-flex-column uk-margin-small-left">
-					<h3 class="uk-margin-remove">
-						Онлайн
-						<span>В сети:</span>
-						<span class="users-count"></span>
-					</h3>
-					<div class="users-container uk-flex-1 uk-overflow-auto">
-						<ul class="uk-list users-online"></ul>
-					</div>
-					<div class="uk-flex uk-flex-middle user-profile-container">
-						
-						<img class="uk-margin-small-left" width="30" alt="" src=
-						<% if(avatar){ %>
-							<%= avatar %>
-						<% } else { %>
-							"img/placeholders/avatar.png"
-							<% } %> 
-						 />
-						
-						
-						<a class="uk-margin-left setup"><span uk-icon="icon: cog"></span></a>
-						<a class="uk-margin-left exit"><span uk-icon="icon: sign-out"></span></a>
-					</div>
-				</div>
+				<%- include('./partials/chat/users-panel'); -%>
 			</div>
 		</main>
 
 		<script src="/socket.io/socket.io.js"></script>
+		<script src="js/variables.js"></script>
 		<script src="js/socket.js"></script>
 		<script src="js/script.js" type="module"></script>
-		<script src="js/setupAvatar.js"></script>
 		<script src="js/uploadAvatar.js" type="module"></script>
 	</body>
 </html>

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const messageSchema = mongoose.Schema({
+	userId: String,
 	username: String,
 	time: Date,
 	text: String,
@@ -13,8 +14,9 @@ const userSchema = mongoose.Schema({
 	password: String,
 	avatar: {
 		type: String,
-		default: '',
+		default: '/img/placeholders/avatar.png',
 	},
+	chatId: String,
 })
 
 module.exports = {

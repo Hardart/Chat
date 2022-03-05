@@ -34,6 +34,12 @@ li,
 	font-size: 0.87rem;
 }
 
+.settings-container,
+.chat-container,
+.select-avatar {
+	transition: all 0.2s ease;
+}
+
 .users-panel {
 	margin-bottom: 1em;
 }
@@ -49,11 +55,14 @@ li,
 }
 
 .user-avatar img,
-.user-profile-container img {
+.user-profile-container img,
+li img {
 	border-radius: 50%;
 }
 
-.user-setup-panel {
+.settings-container {
+	transform: scale(1.7);
+	opacity: 0;
 	z-index: 1;
 	background-color: #4d5760;
 }
@@ -159,5 +168,8 @@ li,
 }
 
 .select-avatar {
-	z-index: 2;
+	transform: scale(1.7);
+	opacity: 0;
+	z-index: 1;
+	background-color: #4d5760;
 }

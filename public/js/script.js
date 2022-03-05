@@ -1,22 +1,24 @@
-import { sendRequest } from './elements/request.js'
-const app = document.getElementById('app')
-const chatApp = document.querySelector('.app-container')
-const usersAsidePanel = document.querySelector('.users-panel')
-const usersSetupPanel = document.querySelector('.user-setup-panel')
+import Visibility from './classes/Visibility.js'
+import { sendRequest } from './network/request.js'
+const panel = new Visibility()
+// кнопки
 const logoutButton = document.querySelector('.exit')
 const setupButton = document.querySelector('.setup')
-const usersToggleBtn = document.querySelector('.users-panel-toggle')
+const usersToggleButton = document.querySelector('.users-panel-toggle')
 
-usersSetupPanel.remove()
-
-usersToggleBtn.onclick = () => {
+usersToggleButton.onclick = () => {
 	usersAsidePanel.classList.toggle('uk-hidden')
 	if (usersAsidePanel.classList.contains('uk-hidden')) return usersAsidePanel.remove()
 	chatApp.insertAdjacentElement('beforeend', usersAsidePanel)
 }
+
 if (logoutButton) {
 	tapLogout(logoutButton)
-	enterSetupMenu(setupButton)
+	openSetting(setupButton)
+}
+
+if (closeButton) {
+	closeSettings(closeButton)
 }
 
 function tapLogout(btn) {
@@ -30,16 +32,14 @@ function tapLogout(btn) {
 	}
 }
 
-function enterSetupMenu(btn) {
+function openSetting(btn) {
 	btn.onclick = () => {
-		app.insertAdjacentElement('afterbegin', usersSetupPanel)
-		usersSetupPanel.classList.remove('uk-hidden')
+		panel.show(usersSettingsPanel, chatApp)
 	}
 }
 
-function setupUserName(input) {
-	return `<div class="uk-flex uk-flex-middle">
-					<h3 id="user-name" class="uk-margin-remove">${input.value}</h3>
-					<a class="uk-margin-left uk-text-small exit">Выход</a>
-				</div>`
+function closeSettings(btn) {
+	btn.onclick = () => {
+		panel.hide(chatApp, usersSettingsPanel)
+	}
 }
