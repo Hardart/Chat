@@ -1,16 +1,22 @@
 <html lang="en">
 	<%- include('./partials/header'); -%>
 	<body>
-		<main id="app">
-			<%- include('./partials/select-avatar'); -%>
-			<%- include('./partials/user-settings/settings-container'); -%>
-			<div class="uk-width-expand uk-flex uk-padding uk-height-1-1 chat-container">
-				<div class="uk-width-expand chat-panel uk-flex uk-flex-column">
-					<%- include('./partials/chat/header-chat-panel'); -%>
-					<%- include('./partials/chat/messages-panel'); -%>
-					<%- include('./partials/chat/send-message-form'); -%>
+		<main id="app" class="uk-overflow-hidden uk-position-absolute uk-flex uk-width-expand uk-height-1-1">
+			<div class="app-wrap">
+				<div class="absolute-container">
+					<div class="uk-position-relative uk-flex uk-flex-1">
+						<%- include('./partials/select-avatar'); -%>
+						<%- include('./partials/user-settings/settings-container'); -%>
+						<div class="absolute-container	 uk-padding chat-container" >
+							<div class="uk-width-expand chat-panel uk-flex uk-flex-column">
+								<%- include('./partials/chat/header-chat-panel'); -%>
+								<%- include('./partials/chat/messages-panel'); -%>
+								<%- include('./partials/chat/send-message-form'); -%>
+							</div>
+							<%- include('./partials/chat/users-panel'); -%>
+						</div>
+					</div>
 				</div>
-				<%- include('./partials/chat/users-panel'); -%>
 			</div>
 		</main>
 

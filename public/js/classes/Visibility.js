@@ -1,8 +1,8 @@
 export default class Visibility {
 	constructor() {
-		this.scale = `scale(1)`
-		this.maxScale = `scale(1.5)`
-		this.minScale = `scale(0.8)`
+		this.scale = `scale(1) translateZ(0px)`
+		this.maxScale = `scale(1.1)`
+		this.minScale = `scale(0.93) translateZ(0px)`
 		this.timeout = 200
 		this.hidden = 0
 		this.shown = 1
