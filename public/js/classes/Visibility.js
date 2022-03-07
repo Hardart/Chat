@@ -1,9 +1,9 @@
-export default class Visibility {
+export default class App {
 	constructor() {
 		this.scale = `scale(1) translateZ(0px)`
-		this.maxScale = `scale(1.1)`
+		this.maxScale = `scale(1.3)`
 		this.minScale = `scale(0.93) translateZ(0px)`
-		this.timeout = 200
+		this.timeout = 100
 		this.hidden = 0
 		this.shown = 1
 	}
@@ -13,12 +13,12 @@ export default class Visibility {
 			elementToShow.classList.remove('uk-hidden')
 		}
 		setTimeout(() => {
-			elementToShow.style.opacity = this.shown
-			elementToShow.style.transform = this.scale
 			elementToHide.style.opacity = this.hidden
 			elementToHide.style.transform = this.minScale
 		}, 0)
 		setTimeout(() => {
+			elementToShow.style.opacity = this.shown
+			elementToShow.style.transform = this.scale
 			elementToHide.remove()
 		}, this.timeout)
 	}

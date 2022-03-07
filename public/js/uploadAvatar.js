@@ -1,7 +1,7 @@
 import Avatar from './classes/Avatar.js'
-import Visibility from './classes/Visibility.js'
+import App from './classes/Visibility.js'
 import { sendFile, sendRequest } from './network/request.js'
-const panel = new Visibility()
+const panel = new App()
 
 selectAvatarInput.onchange = async function () {
 	// console.log(this)
