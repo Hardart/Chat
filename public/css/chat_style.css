@@ -44,8 +44,13 @@ h3 span:not(.room-title) {
 	z-index: 101;
 }
 
-.avatar-input {
+.avatar-input-container {
+	z-index: 1002;
+	transform: scale(0);
+}
+.uk-backwrap {
 	background-color: #00000085;
+	opacity: 0;
 	z-index: 1000;
 }
 
@@ -72,7 +77,9 @@ li,
 
 .settings-container,
 .chat-container,
-.select-avatar {
+.select-avatar,
+.avatar-input-container,
+.uk-backwrap {
 	transition: all 0.2s ease;
 }
 
@@ -100,11 +107,25 @@ li img {
 	transform: scale(1.1);
 	opacity: 0;
 	background-color: #4d5760;
+	z-index: 100;
+}
+
+.user-setup-list li.uk-nav-header,
+.uk-light .user-setup-list li.uk-nav-header {
+	margin-left: 10px;
+	font-size: 1.6rem;
+	color: rgba(255, 255, 255, 0.35);
 }
 
 .user-setup-list li:not(.uk-nav-header) {
-	padding: 5px 0;
+	padding: 5px 10px;
 	cursor: pointer;
+	border-radius: 5px;
+}
+
+.user-setup-list li.uk-active {
+	color: #fff;
+	background-color: #3f4951;
 }
 
 .editing-container {

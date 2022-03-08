@@ -1,14 +1,14 @@
 import Avatar from './classes/Avatar.js'
-import App from './classes/Visibility.js'
+import App from './classes/App.js'
 import { sendFile, sendRequest } from './network/request.js'
-const panel = new App()
+const app = new App(chatApp, usersSettingsPanel, avatarInputPanel, selectAvatar)
 
 selectAvatarInput.onchange = async function () {
 	// console.log(this)
 	const data = new FormData()
 	data.append('avatar', this.files[0])
 
-	panel.show(selectAvatar, usersSettingsPanel)
+	app.show(selectAvatar, usersSettingsPanel)
 
 	const uploadedImage = await sendFile('post', '/test/avatarUpload', data)
 	changeAvatar(uploadedImage)
@@ -112,7 +112,7 @@ function changeAvatar(image) {
 				const path = img.getAttribute('src')
 				if (path == oldPath) img.setAttribute('src', response.path)
 			})
-			panel.hide(usersSettingsPanel, selectAvatar)
+			app.hide(usersSettingsPanel, selectAvatar)
 		}
 	}
 
@@ -122,7 +122,7 @@ function changeAvatar(image) {
 			const oldPath = avatarElement.getAttribute('src')
 
 			await sendRequest('post', '/test/avatarCancel', { path: oldPath })
-			panel.hide(usersSettingsPanel, selectAvatar)
+			app.hide(usersSettingsPanel, selectAvatar)
 		}
 	}
 }

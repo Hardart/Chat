@@ -8,6 +8,8 @@ const uploadAvatar = document.querySelector('form')
 const inputElement = document.querySelector('.number-input')
 const slider = document.querySelector('.track')
 const selectAvatarInput = document.getElementById('select-avatar-input')
+const changeAvatarButton = document.getElementById('change-avatar')
+const avatarInputPanel = document.querySelector('.avatar-input-container')
 
 const setupAvatarBtn = document.getElementById('setupAvatar')
 const cancelSetupAvatarBtn = document.getElementById('cancelSetupAvatar')

@@ -1,6 +1,6 @@
-import Visibility from './classes/Visibility.js'
+import App from './classes/App.js'
 import { sendRequest } from './network/request.js'
-const panel = new Visibility()
+const app = new App(chatApp, usersSettingsPanel, avatarInputPanel, selectAvatar)
 // кнопки
 const logoutButton = document.querySelector('.exit')
 const setupButton = document.querySelector('.setup')
@@ -19,6 +19,7 @@ if (logoutButton) {
 
 if (closeButton) {
 	closeSettings(closeButton)
+	showInputForAvatarSelect()
 }
 
 function tapLogout(btn) {
@@ -34,12 +35,22 @@ function tapLogout(btn) {
 
 function openSetting(btn) {
 	btn.onclick = () => {
-		panel.show(usersSettingsPanel, chatApp)
+		app.openSettings()
 	}
 }
 
 function closeSettings(btn) {
 	btn.onclick = () => {
-		panel.hide(chatApp, usersSettingsPanel)
+		app.closeSettings()
 	}
+}
+
+function showInputForAvatarSelect() {
+	changeAvatarButton.onclick = () => {
+		app.showInput()
+	}
+}
+
+avatarInputPanel.onclick = (e) => {
+	app.hideInput()
 }
