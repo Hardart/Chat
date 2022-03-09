@@ -1,5 +1,25 @@
 <div class="messages-container uk-flex-1 uk-overflow-auto">
-	<div class="chat-wrap uk-position-absolute">
-		<ul class="uk-list messages"></ul>
+	<div class="chat-wrap uk-width-expand uk-position-absolute">
+		<ul class="uk-list messages">
+			<li>
+				<div class="uk-card uk-grid-collapse uk-flex-middle" uk-grid>
+					<div class="uk-card-media-left">
+						<img src="/img/placeholders/avatar.png" width="40" alt="" />
+					</div>
+					<div>
+						<div class="message-body uk-light">
+							<h5 class="message-user-name">Test <span class="uk-text-small uk-text-muted">13:41</span></h5>
+							<p class="uk-text-small uk-margin-remove">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+						</div>
+					</div>
+					<div class="uk-card uk-card-primary uk-card-small uk-width-auto message-buttons uk-border-rounded">
+						<div class="uk-icon-body">
+							<button class="uk-icon-button-s" uk-icon="reply" uk-tooltip="Ответить"></button>
+							<button class="uk-icon-button-s" uk-icon="icon: happy; ratio: 0.9" uk-tooltip="Добавить реакцию"></button>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
 	</div>
 </div>

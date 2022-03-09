@@ -1,1 +1,16 @@
+.uk-icon-body {
+	padding: 3px 8px;
+}
 
+.uk-icon-button-s {
+	box-sizing: border-box;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	transition: 0.2s ease-in-out;
+	transition-property: color, background-color;
+}
+
+.uk-icon-button-s:hover {
+	background-color: #bd5151;
+}

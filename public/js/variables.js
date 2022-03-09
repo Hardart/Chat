@@ -4,19 +4,19 @@ const usersSettingsPanel = document.querySelector('.settings-container') // ос
 const closeButton = document.querySelector('[uk-close]')
 const blockAvatar = document.querySelector('.avatar-block')
 const selectAvatar = document.querySelector('.select-avatar')
-const uploadAvatar = document.querySelector('form')
 const inputElement = document.querySelector('.number-input')
 const slider = document.querySelector('.track')
+
+const avatarInputPanel = document.querySelector('.avatar-input-container')
 const selectAvatarInput = document.getElementById('select-avatar-input')
 const changeAvatarButton = document.getElementById('change-avatar')
-const avatarInputPanel = document.querySelector('.avatar-input-container')
 
 const setupAvatarBtn = document.getElementById('setupAvatar')
 const cancelSetupAvatarBtn = document.getElementById('cancelSetupAvatar')
 const userAvatarBig = document.querySelector('.user-avatar img')
 const userAvatarSmall = document.querySelector('.user-profile-container img')
-const userName = document.querySelector('.uk-user-name span')
-const userChatID = document.querySelector('.uk-user-chat-id span')
+const userName = document.querySelector('.uk-user-name')
+const userChatID = document.querySelector('.uk-user-chat-id')
 const messageList = document.querySelector('.messages')
 
 usersSettingsPanel.remove()

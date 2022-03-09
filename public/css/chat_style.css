@@ -60,10 +60,26 @@ h3 span:not(.room-title) {
 
 li,
 .message-body {
-	padding-left: 10px;
+	padding: 0 10px;
 }
+
 .messages {
 	padding-top: 10px;
+}
+
+.messages li:hover {
+	background-color: #4b535b;
+}
+
+.messages li .message-buttons {
+	position: absolute;
+	top: -5px;
+	right: 5px;
+	opacity: 0;
+}
+
+.messages li:hover .message-buttons {
+	opacity: 1;
 }
 
 .message-user-name,
@@ -87,8 +103,26 @@ li,
 	margin-bottom: 1em;
 }
 
+.users-online {
+	padding: 0;
+}
+
+.users-online li {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	height: 40px;
+	margin: 0 8px;
+}
+
 .users-online li:first-child {
 	margin-top: 5px;
+}
+
+.users-online li:hover {
+	background-color: #4b535b;
+	border-radius: 4px;
+	cursor: pointer;
 }
 
 .user-profile-container {
@@ -117,7 +151,7 @@ li img {
 	color: rgba(255, 255, 255, 0.35);
 }
 
-.user-setup-list li:not(.uk-nav-header) {
+.user-setup-list li:not(:first-child) {
 	padding: 5px 10px;
 	cursor: pointer;
 	border-radius: 5px;
@@ -126,6 +160,11 @@ li img {
 .user-setup-list li.uk-active {
 	color: #fff;
 	background-color: #3f4951;
+}
+
+.user-setup-list li:not(:first-child):not(.uk-active):hover {
+	color: #fff;
+	background-color: #5e6c78;
 }
 
 .editing-container {
@@ -224,8 +263,16 @@ li img {
 }
 
 .select-avatar {
-	transform: scale(1.7);
-	opacity: 0;
-	z-index: 1;
-	background-color: #4d5760;
+	z-index: 1003;
+}
+
+h3 span.uk-user-name {
+	color: #fff;
+	font-size: 1.8rem;
+	font-weight: 600;
+}
+
+h3 span.uk-user-chat-id {
+	color: rgb(219, 218, 218);
+	font-size: 1.8rem;
 }

@@ -4,12 +4,10 @@ import { sendFile, sendRequest } from './network/request.js'
 const app = new App(chatApp, usersSettingsPanel, avatarInputPanel, selectAvatar)
 
 selectAvatarInput.onchange = async function () {
-	// console.log(this)
 	const data = new FormData()
 	data.append('avatar', this.files[0])
 
-	app.show(selectAvatar, usersSettingsPanel)
-
+	app.openAvatarConfig()
 	const uploadedImage = await sendFile('post', '/test/avatarUpload', data)
 	changeAvatar(uploadedImage)
 
@@ -99,6 +97,7 @@ function changeAvatar(image) {
 		setupAvatarBtn.onclick = async function () {
 			const oldPath = userAvatarBig.getAttribute('src')
 			const body = { avatar: avatar, userId: userChatID.innerText }
+
 			if (oldPath.match(/[^\/]+$/)[0] !== 'avatar.png') {
 				body.oldPath = oldPath
 			}
@@ -112,7 +111,7 @@ function changeAvatar(image) {
 				const path = img.getAttribute('src')
 				if (path == oldPath) img.setAttribute('src', response.path)
 			})
-			app.hide(usersSettingsPanel, selectAvatar)
+			app.closeAvatarConfig()
 		}
 	}
 
@@ -120,9 +119,8 @@ function changeAvatar(image) {
 	if (cancelSetupAvatarBtn) {
 		cancelSetupAvatarBtn.onclick = async function () {
 			const oldPath = avatarElement.getAttribute('src')
-
+			app.closeAvatarConfig(false)
 			await sendRequest('post', '/test/avatarCancel', { path: oldPath })
-			app.hide(usersSettingsPanel, selectAvatar)
 		}
 	}
 }

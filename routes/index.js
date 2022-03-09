@@ -8,7 +8,7 @@ const room = require('../schema/Room')
 router.get('/', async (req, res) => {
 	if (req.cookies.access) {
 		const verifiedUser = jwt.verify(req.cookies.access, process.env.SECRET_TOKEN)
-		room.addUser(`${verifiedUser.id}=${verifiedUser.name}`)
+		room.addUser(JSON.stringify(verifiedUser))
 		let avatar
 		try {
 			await Fs.access(`./public${verifiedUser.avatar}`)

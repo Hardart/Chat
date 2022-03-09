@@ -5,7 +5,7 @@ export default class App {
 		this.inputAvatar = inputAvatar
 		this.changeAvatar = changeAvatar
 
-		this.scale = `scale(1) translateZ(0px)`
+		this.defaultScale = `scale(1) translateZ(0px)`
 		this.maxScale = `scale(1.3) translateZ(0px)`
 		this.minScale = `scale(0.93) translateZ(0px)`
 		this.zeroScale = `scale(0) translateZ(0px)`
@@ -14,35 +14,35 @@ export default class App {
 		this.shown = 1
 	}
 
-	show(elementToShow, elementToHide) {
-		elementToHide.insertAdjacentElement('beforebegin', elementToShow)
-		if (elementToShow.classList.contains('uk-hidden')) {
-			elementToShow.classList.remove('uk-hidden')
-		}
-		setTimeout(() => {
-			elementToHide.style.opacity = this.hidden
-			elementToHide.style.transform = this.minScale
-		}, 0)
-		setTimeout(() => {
-			elementToShow.style.opacity = this.shown
-			elementToShow.style.transform = this.scale
-			elementToHide.remove()
-		}, this.timeout)
-	}
+	// show(elementToShow, elementToHide) {
+	// 	elementToHide.insertAdjacentElement('beforebegin', elementToShow)
+	// 	if (elementToShow.classList.contains('uk-hidden')) {
+	// 		elementToShow.classList.remove('uk-hidden')
+	// 	}
+	// 	setTimeout(() => {
+	// 		elementToHide.style.opacity = this.hidden
+	// 		elementToHide.style.transform = this.minScale
+	// 	}, 0)
+	// 	setTimeout(() => {
+	// 		elementToShow.style.opacity = this.shown
+	// 		elementToShow.style.transform = this.defaultScale
+	// 		elementToHide.remove()
+	// 	}, this.timeout)
+	// }
 
-	hide(elementToShow, elementToHide) {
-		elementToHide.insertAdjacentElement('afterend', elementToShow)
-		setTimeout(() => {
-			elementToShow.style.opacity = this.shown
-			elementToShow.style.transform = this.scale
-			elementToHide.style.opacity = this.hidden
-			elementToHide.style.transform = this.maxScale
-		}, 0)
-		setTimeout(() => {
-			elementToHide.classList.add('uk-hidden')
-			elementToHide.remove()
-		}, this.timeout)
-	}
+	// hide(elementToShow, elementToHide) {
+	// 	elementToHide.insertAdjacentElement('afterend', elementToShow)
+	// 	setTimeout(() => {
+	// 		elementToShow.style.opacity = this.shown
+	// 		elementToShow.style.transform = this.defaultScale
+	// 		elementToHide.style.opacity = this.hidden
+	// 		elementToHide.style.transform = this.maxScale
+	// 	}, 0)
+	// 	setTimeout(() => {
+	// 		elementToHide.classList.add('uk-hidden')
+	// 		elementToHide.remove()
+	// 	}, this.timeout)
+	// }
 
 	openSettings() {
 		this.mainWindow.insertAdjacentElement('beforebegin', this.settings)
@@ -53,7 +53,7 @@ export default class App {
 		}, 0)
 		setTimeout(() => {
 			this.settings.style.opacity = this.shown
-			this.settings.style.transform = this.scale
+			this.settings.style.transform = this.defaultScale
 			// elementToHide.remove()
 		}, this.timeout)
 	}
@@ -65,9 +65,32 @@ export default class App {
 		}, 0)
 		setTimeout(() => {
 			this.mainWindow.style.opacity = this.shown
-			this.mainWindow.style.transform = this.scale
+			this.mainWindow.style.transform = this.defaultScale
 			this.settings.classList.add('uk-hidden')
 			this.settings.remove()
+		}, this.timeout)
+	}
+
+	openAvatarConfig() {
+		this.inputAvatar.insertAdjacentElement('afterend', this.changeAvatar)
+		this.changeAvatar.classList.remove('uk-hidden')
+
+		this.inputAvatar.style.opacity = this.hidden
+		this.inputAvatar.style.transform = this.minScale
+		this.changeAvatar.style.opacity = this.hidden
+		this.changeAvatar.style.transform = this.minScale
+		setTimeout(() => {
+			this.changeAvatar.style.transform = this.defaultScale
+			this.changeAvatar.style.opacity = this.shown
+		}, 500)
+	}
+
+	closeAvatarConfig(closeAll = true) {
+		this.changeAvatar.style.opacity = this.hidden
+		this.changeAvatar.style.transform = this.minScale
+		closeAll ? this.hideInput() : this.showInput()
+		setTimeout(() => {
+			this.changeAvatar.remove()
 		}, this.timeout)
 	}
 
@@ -76,7 +99,8 @@ export default class App {
 
 		setTimeout(() => {
 			this.inputAvatar.previousElementSibling.style.opacity = this.shown
-			this.inputAvatar.style.transform = this.scale
+			this.inputAvatar.style.transform = this.defaultScale
+			this.inputAvatar.style.opacity = this.shown
 		}, this.timeout)
 	}
 

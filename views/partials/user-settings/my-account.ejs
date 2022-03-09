@@ -1,6 +1,6 @@
-<div class="uk-width-expand uk-flex uk-flex-column uk-padding-large">
+<div class="uk-width-expand uk-flex uk-flex-column uk-padding-large my-acc">
 	<h3>Моя учётная запись</h3>
-	<div class="uk-card uk-card-primary uk-border-rounded uk-width-large">
+	<div class="uk-card uk-card-primary uk-border-rounded ">
 		<div class="uk-card-header uk-flex uk-flex-middle">
 			<div class="uk-border-circle user-avatar">
 				<img src= <%= avatar %> width="100px" alt="" />
@@ -10,9 +10,8 @@
 			</div>
 		</div>
 		<div class="uk-card-body">
-			<h3 class="uk-user-name">Ваше имя: <span><%= username %></span> </h3>
-			<h3 class="uk-user-chat-id">Ваш ID: <span><%= chatId %></span> </h3>
+			<h3 ><span class="uk-user-name"><%= username %></span><span class="uk-user-chat-id"><%= chatId %></span> </h3>
 		</div>
 	</div>
-	<!-- <%- include('./upload-avatar'); -%> -->
+	
 </div>

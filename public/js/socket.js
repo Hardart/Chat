@@ -5,7 +5,7 @@ const messageForm = document.querySelector('.message-form')
 const usersOnline = document.querySelector('.users-online')
 
 socket.on('clients-count', (users) => {
-	setUsersOnline(usersOnline, users, clientsCount)
+	// setUsersOnline(usersOnline, users, clientsCount)
 })
 
 socket.on('clients-disconnect', (users) => {
@@ -18,16 +18,16 @@ socket.on('sendMessage', (msg) => {
 	div.scrollIntoView({ block: 'start', behavior: 'smooth' })
 })
 
-socket.on('messageHistory', (historyArr) => {
-	messageList.innerHTML = ''
-	historyArr.forEach((msg) => {
-		messageList.innerHTML += newMessage(msg)
-	})
-	if (messageList.children.length > 0) {
-		const div = messageList.lastElementChild
-		div.scrollIntoView({ block: 'start', behavior: 'smooth' })
-	}
-})
+// socket.on('messageHistory', (historyArr) => {
+// 	messageList.innerHTML = ''
+// 	historyArr.forEach((msg) => {
+// 		messageList.innerHTML += newMessage(msg)
+// 	})
+// 	if (messageList.children.length > 0) {
+// 		const div = messageList.lastElementChild
+// 		div.scrollIntoView({ block: 'start', behavior: 'smooth' })
+// 	}
+// })
 
 messageForm.addEventListener('submit', clickSubmitBtn)
 
@@ -60,16 +60,25 @@ function newMessage(msg) {
 	</li>`
 }
 
-function newUser(name) {
-	return `<li>${name}</li>`
+function newUser(user) {
+	return `<li>
+				<div class="uk-card uk-grid-collapse uk-flex-middle" uk-grid>
+					<div class="uk-card-media-left uk-margin-small-right">
+						<img src="${user.avatar}" width="30" alt="" />
+					</div>
+					<div>
+						<h5 class="user-name">${user.name}</h5>
+					</div>
+				</div>
+			</li>`
 }
 
 function setUsersOnline(ulList, arrayOfUsers, clients) {
 	let arr = []
 	ulList.innerHTML = ''
 	arrayOfUsers.forEach((i) => {
-		const user = JSON.parse(`{"id":"${i.split('=').join('","name":"')}"}`)
-		ulList.innerHTML += newUser(user.name)
+		const user = JSON.parse(i)
+		ulList.innerHTML += newUser(user)
 		arr.push(user)
 	})
 	clients.innerText = arr.length

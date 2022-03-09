@@ -4,7 +4,18 @@
 		<span class="users-count"></span>
 	</h3>
 	<div class="users-container uk-flex-1 uk-overflow-auto">
-		<ul class="uk-list users-online"></ul>
+		<ul class="users-online">
+			<li>
+				<div class="uk-card uk-grid-collapse uk-flex-middle" uk-grid>
+					<div class="uk-card-media-left uk-margin-small-right">
+						<img src="/img/placeholders/avatar.png" width="30" alt="" />
+					</div>
+					<div>
+						<h5 class="user-name">Test </h5>
+					</div>
+				</div>
+			</li>
+		</ul>
 	</div>
 	<div class="uk-flex uk-flex-middle user-profile-container">
 		<img class="uk-margin-small-left" width="30" alt="" src= <%= avatar %>	 />

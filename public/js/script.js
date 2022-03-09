@@ -1,4 +1,5 @@
 import App from './classes/App.js'
+import settingsListItemClick from './components/settings.js'
 import { sendRequest } from './network/request.js'
 const app = new App(chatApp, usersSettingsPanel, avatarInputPanel, selectAvatar)
 // кнопки
@@ -36,6 +37,7 @@ function tapLogout(btn) {
 function openSetting(btn) {
 	btn.onclick = () => {
 		app.openSettings()
+		settingsListItemClick()
 	}
 }
 
@@ -52,5 +54,5 @@ function showInputForAvatarSelect() {
 }
 
 avatarInputPanel.onclick = (e) => {
-	app.hideInput()
+	if (e.target != selectAvatarInput) return app.hideInput()
 }

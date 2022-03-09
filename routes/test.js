@@ -4,11 +4,34 @@ const uploadFile = require('../middlewears/avatar/uploadAvatar')
 const deleteFile = require('../middlewears/avatar/deleteAvatar')
 const resizeFile = require('../middlewears/avatar/resizeAvatar')
 const imageInfo = require('image-size')
-
+const room = require('../schema/Room')
 router.get('/', async (req, res) => {
-	res.render('test', {
-		title: 'Тестовая страница',
-	})
+	const users = [
+		{
+			id: '622360f3c8a2e37a345854ac',
+			name: 'Hardart',
+			avatar: '/img/avatars/1646820793831_avatar.jpeg',
+			chatId: '#1',
+			iat: 1646824951,
+		},
+		{
+			id: '622360f3c8a2e37a345854ac',
+			name: 'Hardart',
+			avatar: '/img/avatars/1646820793831_avatar.jpeg',
+			chatId: '#1',
+			iat: 1646824951,
+		},
+		{
+			id: '622360f3c8a2e37a345854ac',
+			name: 'Hardart',
+			avatar: '/img/avatars/1646820793831_avatar.jpeg',
+			chatId: '#1',
+			iat: 1646824951,
+		},
+	]
+	console.log()
+
+	res.status(200).send(room.users)
 })
 
 router.post('/avatarUpload', uploadFile.single('avatar'), async (req, res) => {
