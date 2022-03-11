@@ -16,6 +16,7 @@ app.use(express.json())
 app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
+
 io.use(wrap(cookieParser()))
 
 app.use('/', require('./routes/index'))

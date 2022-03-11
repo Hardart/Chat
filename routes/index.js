@@ -4,6 +4,7 @@ const router = express.Router()
 const jwt = require('jsonwebtoken')
 const { promises: Fs } = require('fs')
 const room = require('../schema/Room')
+const cors = require('cors')
 
 router.get('/', async (req, res) => {
 	if (req.cookies.access) {
