@@ -10,21 +10,6 @@ const cookieParser = require('cookie-parser')
 const { MessagesArchive, Users } = require('./schema/mongoSchemas')
 const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next)
 
-app.set('views', './views')
-app.set('view engine', 'ejs')
-app.use(express.json())
-app.use(express.static(__dirname + '/public'))
-app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
-
-io.use(wrap(cookieParser()))
-
-app.use('/', require('./routes/index'))
-app.use('/login', require('./routes/login'))
-app.use('/registration', require('./routes/registration'))
-app.use('/test', require('./routes/test'))
-app.use('*', require('./routes/404'))
-
 async function start() {
 	try {
 		await mongoose.connect(
@@ -38,6 +23,20 @@ async function start() {
 		server.listen(PORT, () => {
 			console.log('====================================\nСервер запущен\n====================================')
 		})
+		app.set('views', './views')
+		app.set('view engine', 'ejs')
+		app.use(express.json())
+		app.use(express.static(__dirname + '/public'))
+		app.use(express.urlencoded({ extended: true }))
+		app.use(cookieParser())
+
+		io.use(wrap(cookieParser()))
+
+		app.use('/', require('./routes/index'))
+		app.use('/login', require('./routes/login'))
+		app.use('/registration', require('./routes/registration'))
+		app.use('/test', require('./routes/test'))
+		app.use('*', require('./routes/404'))
 	} catch (e) {
 		console.log(e)
 	}
