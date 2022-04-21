@@ -5,7 +5,7 @@ const closeButton = document.querySelector('[uk-close]')
 const blockAvatar = document.querySelector('.avatar-block')
 const selectAvatar = document.querySelector('.select-avatar')
 const inputElement = document.querySelector('.number-input')
-const slider = document.querySelector('.track')
+
 
 const avatarInputPanel = document.querySelector('.avatar-input-container')
 const selectAvatarInput = document.getElementById('select-avatar-input')

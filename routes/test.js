@@ -33,7 +33,11 @@ router.get('/', cors(), async (req, res) => {
 	]
 	// console.log()
 
-	res.status(200).send(users)
+	// res.status(200).send(users)
+	res.render('test', {
+		title: 'Test page',
+		user: true,
+	})
 })
 
 router.post('/avatarUpload', uploadFile.single('avatar'), async (req, res) => {

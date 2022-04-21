@@ -1,7 +1,23 @@
 import App from './classes/App.js'
-import settingsListItemClick from './components/settings.js'
+import ToggleActiveClass from './classes/Element.js'
+const settingsListItems = [
+	{ id: '1', title: 'account', selector: '.my-acc' },
+	{ id: '2', title: 'history', selector: '.my-acc' },
+	{ id: '3', title: 'account', selector: '.my-acc' },
+	{ id: '4', title: 'account', selector: '.my-acc' },
+	{ id: '5', title: 'account', selector: '.my-acc' },
+	{ id: '6', title: 'account', selector: '.my-acc' },
+	{ id: '7', title: 'account', selector: '.my-acc' },
+	{ id: '8', title: 'account', selector: '.my-acc' },
+	{ id: '9', title: 'account', selector: '.my-acc' },
+	{ id: '10', title: 'account', selector: '.my-acc' },
+]
+
 import { sendRequest } from './network/request.js'
+
 const app = new App(chatApp, usersSettingsPanel, avatarInputPanel, selectAvatar)
+const settings = new ToggleActiveClass('.user-setup-list li', settingsListItems)
+
 // кнопки
 const logoutButton = document.querySelector('.exit')
 const setupButton = document.querySelector('.setup')
@@ -36,8 +52,10 @@ function tapLogout(btn) {
 
 function openSetting(btn) {
 	btn.onclick = () => {
+		
 		app.openSettings()
-		settingsListItemClick()
+		settings.selectMenuItem()
+		// settingsListItemClick()
 	}
 }
 
@@ -56,3 +74,4 @@ function showInputForAvatarSelect() {
 avatarInputPanel.onclick = (e) => {
 	if (e.target != selectAvatarInput) return app.hideInput()
 }
+

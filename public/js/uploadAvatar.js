@@ -1,4 +1,4 @@
-import Avatar from './classes/Avatar.js'
+import { Avatar, ChangeAvatar} from './classes/Avatar.js'
 import App from './classes/App.js'
 import { sendFile, sendRequest } from './network/request.js'
 const app = new App(chatApp, usersSettingsPanel, avatarInputPanel, selectAvatar)
@@ -15,53 +15,57 @@ selectAvatarInput.onchange = async function () {
 }
 
 function changeAvatar(image) {
+	const slider = document.querySelector('.track')
 	const valueElement = document.querySelector('.grabber')
 	const avatarElement = document.querySelector('.image-enabled')
 	const barFill = document.querySelector('.bar-fill')
 	const avatarBorders = document.querySelector('.overlay-avatar')
-	avatarElement.setAttribute('src', image.path.substring(6, image.path.length))
+	const testChange = new ChangeAvatar(image)
 
-	const avatar = new Avatar(avatarElement, image, avatarBorders)
-	avatar.path = image.path
-	avatar.calcSize()
+	// avatarElement.setAttribute('src', image.path.substring(6, image.path.length))
+	// console.log(barFill)
+	// const avatar = new Avatar(avatarElement, image, avatarBorders)
 
-	valueElement.onmousedown = function (event) {
-		let shiftX = event.clientX - valueElement.getBoundingClientRect().left
+	// avatar.path = image.path
+	// avatar.calcSize()
+	testChange.moveMouse()
+	// valueElement.onmousedown = function (event) {
+	// 	let shiftX = event.clientX - valueElement.getBoundingClientRect().left
 
-		function moveAt(pageX) {
-			let moveLeft = pageX - shiftX - slider.getBoundingClientRect().left
-			let moveLefInPercent = (moveLeft * 100) / slider.clientWidth
+	// 	function moveAt(pageX) {
+	// 		let moveLeft = pageX - shiftX - slider.getBoundingClientRect().left
+	// 		let moveLefInPercent = (moveLeft * 100) / slider.clientWidth
 
-			if (moveLefInPercent < 0) {
-				moveLefInPercent = moveLeft = 0
-			}
-			if (moveLefInPercent > 100) {
-				moveLefInPercent = 100
-				moveLeft = slider.clientWidth
-			}
+	// 		if (moveLefInPercent < 0) {
+	// 			moveLefInPercent = moveLeft = 0
+	// 		}
+	// 		if (moveLefInPercent > 100) {
+	// 			moveLefInPercent = 100
+	// 			moveLeft = slider.clientWidth
+	// 		}
 
-			avatar.scale = moveLeft / 2
-			avatar.setPosition()
-			avatar.setSize(moveLeft)
+	// 		avatar.scale = moveLeft / 2
+	// 		avatar.setPosition()
+	// 		avatar.setSize(moveLeft)
 
-			valueElement.style.left = moveLefInPercent + '%'
-			barFill.style.width = moveLefInPercent + '%'
-			inputElement.setAttribute('value', Math.round(moveLefInPercent))
-		}
+	// 		valueElement.style.left = moveLefInPercent + '%'
+	// 		barFill.style.width = moveLefInPercent + '%'
+	// 		inputElement.setAttribute('value', Math.round(moveLefInPercent))
+	// 	}
 
-		function onMouseMove(event) {
-			moveAt(event.pageX)
-		}
+	// 	function onMouseMove(event) {
+	// 		moveAt(event.pageX)
+	// 	}
 
-		function onMouseUp() {
-			document.removeEventListener('mousemove', onMouseMove)
-			document.removeEventListener('mouseup', onMouseUp)
-		}
+	// 	function onMouseUp() {
+	// 		document.removeEventListener('mousemove', onMouseMove)
+	// 		document.removeEventListener('mouseup', onMouseUp)
+	// 	}
 
-		// передвигаем мяч при событии mousemove
-		document.addEventListener('mousemove', onMouseMove)
-		document.addEventListener('mouseup', onMouseUp)
-	}
+	// 	// передвигаем мяч при событии mousemove
+	// 	document.addEventListener('mousemove', onMouseMove)
+	// 	document.addEventListener('mouseup', onMouseUp)
+	// }
 
 	avatarElement.onmousedown = function (event) {
 		let shiftX = event.pageX - avatar.posX

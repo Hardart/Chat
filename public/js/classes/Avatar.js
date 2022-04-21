@@ -1,4 +1,4 @@
-export default class Avatar {
+export class Avatar {
 	constructor(avatarElement, imageObj, borderElement) {
 		this.avatarElement = avatarElement
 		this.borderElement = borderElement
@@ -92,5 +92,22 @@ export default class Avatar {
 	get isHorisontalAspect() {
 		if (this.w >= this.h) return true
 		return false
+	}
+}
+
+export class ChangeAvatar {
+	constructor(image) {
+		this.inputSlider = document.querySelector('.track')
+		this.inputGrabber = document.querySelector('.grabber')
+		this.uploadedImage = document.querySelector('.image-enabled')
+		this.inputSliderFill = document.querySelector('.bar-fill')
+		this.avatarBorders = document.querySelector('.overlay-avatar')
+		this.avatar = new Avatar(this.uploadedImage, image, this.avatarBorders)
+		this.uploadedImage.setAttribute('src', image.path.substring(6, image.path.length))
+		this.inputGrabber.onmousedown = this.moveMouse
+	}
+
+	moveMouse(e) {
+		console.log(e)
 	}
 }
