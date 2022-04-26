@@ -1,5 +1,5 @@
 import Avatar from '../classes/Avatar.js'
-import { inputElement, selectAvatarInput, setupAvatarBtn, cancelSetupAvatarBtn, userAvatarBig, userAvatarSmall, userChatID, messageList } from '../variables.js'
+import { inputElement, selectAvatarInput, setupAvatarBtn, cancelSetupAvatarBtn, userAvatarBig, userAvatarSmall, userChatID, messageList } from '../globalVariables.js'
 export default async function (app, api) {
 	const data = new FormData()
 	data.append('avatar', selectAvatarInput.files[0])

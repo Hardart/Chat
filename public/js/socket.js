@@ -1,13 +1,12 @@
-import { messageList } from './variables.js'
+import { messageList } from './globalVariables.js'
 import chatApi from './components/chatMessages.js'
 const socket = io()
-let nsSocket = ''
 const clientsCount = document.querySelector('.users-count')
 const messageForm = document.querySelector('.message-form')
 const usersOnline = document.querySelector('.users-online')
 
 socket.on('clients-count', (users) => {
-	chatApi.setUsersOnline(usersOnline, users, clientsCount)
+	// chatApi.setUsersOnline(usersOnline, users, clientsCount)
 })
 
 socket.on('clients-disconnect', (users) => {
