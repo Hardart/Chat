@@ -1,31 +1,24 @@
 require('dotenv').config()
 const express = require('express')
 const router = express.Router()
-const jwt = require('jsonwebtoken')
 const { promises: Fs } = require('fs')
-const room = require('../schema/Room')
-const cors = require('cors')
+const cleanRoomUsers = require('../middlewears/avatar/cleanRoomUsers')
 
-router.get('/', async (req, res) => {
-	if (req.cookies.access) {
-		const verifiedUser = jwt.verify(req.cookies.access, process.env.SECRET_TOKEN)
-		room.addUser(JSON.stringify(verifiedUser))
-		let avatar
-		try {
-			await Fs.access(`./public${verifiedUser.avatar}`)
-			avatar = verifiedUser.avatar
-		} catch {
-			avatar = process.env.AVATAR_PLACEHOLDER
-		}
-		res.render('index', {
-			title: 'Чат',
-			username: verifiedUser.name,
-			avatar: avatar,
-			chatId: verifiedUser.chatId,
-		})
-	} else {
-		res.redirect('/login')
+router.get('/', cleanRoomUsers, async (req, res) => {
+	const user = req.user
+	let avatar
+	try {
+		await Fs.access(`./public${user.avatar}`)
+		avatar = user.avatar
+	} catch {
+		avatar = process.env.AVATAR_PLACEHOLDER
 	}
+	res.render('index', {
+		title: 'Чат',
+		username: user.name,
+		avatar: avatar,
+		chatId: user.chatId,
+	})
 })
 
 router.post('/logout', async (req, res) => {

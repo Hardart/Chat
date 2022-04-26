@@ -16,6 +16,10 @@ class Room {
 	addUser(userObj) {
 		this.users.add(userObj)
 	}
+	
+	deleteUser(userObj) {
+		this.users.delete(userObj)
+	}
 
 	clearHistory() {
 		this.history = []
@@ -26,6 +30,4 @@ class Room {
 	}
 }
 
-const room = new Room(0, 'main')
-
-module.exports = room
+module.exports = new Room(0, 'main')

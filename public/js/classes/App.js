@@ -14,36 +14,6 @@ export default class App {
 		this.shown = 1
 	}
 
-	// show(elementToShow, elementToHide) {
-	// 	elementToHide.insertAdjacentElement('beforebegin', elementToShow)
-	// 	if (elementToShow.classList.contains('uk-hidden')) {
-	// 		elementToShow.classList.remove('uk-hidden')
-	// 	}
-	// 	setTimeout(() => {
-	// 		elementToHide.style.opacity = this.hidden
-	// 		elementToHide.style.transform = this.minScale
-	// 	}, 0)
-	// 	setTimeout(() => {
-	// 		elementToShow.style.opacity = this.shown
-	// 		elementToShow.style.transform = this.defaultScale
-	// 		elementToHide.remove()
-	// 	}, this.timeout)
-	// }
-
-	// hide(elementToShow, elementToHide) {
-	// 	elementToHide.insertAdjacentElement('afterend', elementToShow)
-	// 	setTimeout(() => {
-	// 		elementToShow.style.opacity = this.shown
-	// 		elementToShow.style.transform = this.defaultScale
-	// 		elementToHide.style.opacity = this.hidden
-	// 		elementToHide.style.transform = this.maxScale
-	// 	}, 0)
-	// 	setTimeout(() => {
-	// 		elementToHide.classList.add('uk-hidden')
-	// 		elementToHide.remove()
-	// 	}, this.timeout)
-	// }
-
 	openSettings() {
 		this.mainWindow.insertAdjacentElement('beforebegin', this.settings)
 		this.settings.classList.remove('uk-hidden')

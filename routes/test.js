@@ -4,35 +4,10 @@ const uploadFile = require('../middlewears/avatar/uploadAvatar')
 const deleteFile = require('../middlewears/avatar/deleteAvatar')
 const resizeFile = require('../middlewears/avatar/resizeAvatar')
 const imageInfo = require('image-size')
-const room = require('../schema/Room')
+
 const cors = require('cors')
 
 router.get('/', cors(), async (req, res) => {
-	const users = [
-		{
-			id: '622360f3c8a2e37a345854ac',
-			name: 'Hardart',
-			avatar: '/img/avatars/1646820793831_avatar.jpeg',
-			chatId: '#1',
-			iat: 1646824951,
-		},
-		{
-			id: '622360f3c8a2e37a345854ac',
-			name: 'Hardart',
-			avatar: '/img/avatars/1646820793831_avatar.jpeg',
-			chatId: '#1',
-			iat: 1646824951,
-		},
-		{
-			id: '622360f3c8a2e37a345854ac',
-			name: 'Hardart',
-			avatar: '/img/avatars/1646820793831_avatar.jpeg',
-			chatId: '#1',
-			iat: 1646824951,
-		},
-	]
-	// console.log()
-
 	// res.status(200).send(users)
 	res.render('test', {
 		title: 'Test page',

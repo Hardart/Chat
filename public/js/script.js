@@ -1,27 +1,19 @@
 import App from './classes/App.js'
-import ToggleActiveClass from './classes/Element.js'
-const settingsListItems = [
-	{ id: '1', title: 'account', selector: '.my-acc' },
-	{ id: '2', title: 'history', selector: '.my-acc' },
-	{ id: '3', title: 'account', selector: '.my-acc' },
-	{ id: '4', title: 'account', selector: '.my-acc' },
-	{ id: '5', title: 'account', selector: '.my-acc' },
-	{ id: '6', title: 'account', selector: '.my-acc' },
-	{ id: '7', title: 'account', selector: '.my-acc' },
-	{ id: '8', title: 'account', selector: '.my-acc' },
-	{ id: '9', title: 'account', selector: '.my-acc' },
-	{ id: '10', title: 'account', selector: '.my-acc' },
-]
-
-import { sendRequest } from './network/request.js'
-
+import { chatApp, usersAsidePanel, usersSettingsPanel, avatarInputPanel, selectAvatar, selectAvatarInput } from './variables.js'
+import ToggleActiveClass from './classes/ToggleClasses.js'
+import api from './network/request.js'
+import changeAvatar from './components/changeAvatar.js'
 const app = new App(chatApp, usersSettingsPanel, avatarInputPanel, selectAvatar)
-const settings = new ToggleActiveClass('.user-setup-list li', settingsListItems)
+const settings = new ToggleActiveClass('.user-setup-list li')
 
-// кнопки
-const logoutButton = document.querySelector('.exit')
-const setupButton = document.querySelector('.setup')
+selectAvatarInput.onchange = function() {
+	changeAvatar(app, api)
+}
 const usersToggleButton = document.querySelector('.users-panel-toggle')
+
+// кнопки в панели выбора аватара
+const setupButton = usersAsidePanel.querySelector('.setup')
+const logoutButton = usersAsidePanel.querySelector('.exit')
 
 usersToggleButton.onclick = () => {
 	usersAsidePanel.classList.toggle('uk-hidden')
@@ -34,15 +26,10 @@ if (logoutButton) {
 	openSetting(setupButton)
 }
 
-if (closeButton) {
-	closeSettings(closeButton)
-	showInputForAvatarSelect()
-}
-
 function tapLogout(btn) {
 	btn.onclick = () => {
 		socket.emit('logout')
-		sendRequest('post', '/logout').then((res) => {
+		api.sendRequest('post', '/logout').then((res) => {
 			if (res.callback == 'ok') {
 				window.location = './'
 			}
@@ -52,20 +39,22 @@ function tapLogout(btn) {
 
 function openSetting(btn) {
 	btn.onclick = () => {
-		
 		app.openSettings()
 		settings.selectMenuItem()
-		// settingsListItemClick()
+		showInputForAvatarSelect()
+		closeSettings()
 	}
 }
 
-function closeSettings(btn) {
-	btn.onclick = () => {
+function closeSettings() {
+	const closeButton = document.querySelector('[uk-close]')
+	closeButton.onclick = () => {
 		app.closeSettings()
 	}
 }
 
 function showInputForAvatarSelect() {
+	const changeAvatarButton = document.getElementById('change-avatar')
 	changeAvatarButton.onclick = () => {
 		app.showInput()
 	}

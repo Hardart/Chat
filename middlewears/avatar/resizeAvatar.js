@@ -2,6 +2,7 @@ require('dotenv').config()
 const sharp = require('sharp')
 const fs = require('fs')
 const jwt = require('jsonwebtoken')
+const room = require('../../schema/Room')
 const { Users, MessagesArchive } = require('../../schema/mongoSchemas')
 
 async function resize(req, res, next) {
@@ -35,8 +36,8 @@ async function resize(req, res, next) {
 			.toFile(newName)
 
 		req.resize = { path: newName.match(/public(.*)/)[1] }
-
 		const user = await Users.findOne({ _id: verifiedUser.id })
+		
 		user.avatar = req.resize.path
 		await user.save()
 		req.resize.token = jwt.sign({ id: user._id, name: user.name, avatar: user.avatar, chatId: req.body.userId }, process.env.SECRET_TOKEN)
