@@ -3,6 +3,7 @@ import { chatApp, usersAsidePanel, usersSettingsPanel, avatarInputPanel, selectA
 import ToggleActiveClass from './classes/ToggleClasses.js'
 import api from './network/request.js'
 import changeAvatar from './components/changeAvatar.js'
+import { socket } from './socket.js'
 const app = new App(chatApp, usersSettingsPanel, avatarInputPanel, selectAvatar)
 const settings = new ToggleActiveClass('.user-setup-list li')
 const userCard = new ToggleActiveClass('.users-online', chatApp)

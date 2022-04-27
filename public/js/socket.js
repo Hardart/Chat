@@ -1,6 +1,6 @@
 import { messageList } from './globalVariables.js'
 import chatApi from './components/chatMessages.js'
-const socket = io()
+export const socket = io()
 const clientsCount = document.querySelector('.users-count')
 const messageForm = document.querySelector('.message-form')
 const usersOnline = document.querySelector('.users-online')

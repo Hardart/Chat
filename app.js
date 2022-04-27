@@ -33,7 +33,6 @@ async function start() {
 		io.use(wrap(cookieParser()))
 
 		app.use('/', require('./routes/index'))
-		app.use('/login', require('./routes/login'))
 		app.use('/registration', require('./routes/registration'))
 		app.use('/test', require('./routes/test'))
 		app.use('*', require('./routes/404'))

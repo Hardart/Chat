@@ -1,6 +1,7 @@
 const { Users } = require('../../schema/mongoSchemas')
 const jwt = require('jsonwebtoken')
 
+
 async function simpleAuth(req, res, next) {
 	if (req.headers.authorization) {
 		const verifiedUser = jwt.verify(req.headers.authorization, process.env.SECRET_TOKEN)
@@ -14,5 +15,7 @@ async function simpleAuth(req, res, next) {
 	}
 	next()
 }
+
+
 
 module.exports = simpleAuth
