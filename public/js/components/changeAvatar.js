@@ -1,12 +1,21 @@
 import Avatar from '../classes/Avatar.js'
-import { inputElement, selectAvatarInput, setupAvatarBtn, cancelSetupAvatarBtn, userAvatarBig, userAvatarSmall, userChatID, messageList } from '../globalVariables.js'
+import {
+	inputElement,
+	selectAvatarInput,
+	setupAvatarBtn,
+	cancelSetupAvatarBtn,
+	userAvatarBig,
+	userAvatarSmall,
+	userChatID,
+	messageList,
+} from '../globalVariables.js'
 export default async function (app, api) {
 	const data = new FormData()
 	data.append('avatar', selectAvatarInput.files[0])
 
 	app.openAvatarConfig()
 	try {
-		const uploadedImage = await api.sendFile('post', '/test/avatarUpload', data)
+		const uploadedImage = await api.sendFile('post', '/avatar/upload', data)
 		changeAvatar(uploadedImage, app, api)
 	} catch (error) {
 		console.log(error)
@@ -21,7 +30,7 @@ function changeAvatar(image, app, api) {
 	const uploadedAvatar = document.querySelector('.image-enabled')
 	const sliderBarFill = document.querySelector('.bar-fill')
 	const avatarBorders = document.querySelector('.overlay-avatar')
-	
+
 	uploadedAvatar.setAttribute('src', image.path.substring(6, image.path.length))
 	const avatar = new Avatar(uploadedAvatar, image, avatarBorders)
 
@@ -96,13 +105,13 @@ function changeAvatar(image, app, api) {
 	}
 
 	// кнопка Отправить аватар после коррекции пользователем
-	pressSendButton(avatar, app, api)
+	pressSendButton(avatar, app, api, uploadedAvatar, sliderGrabber, sliderBarFill)
 
 	// кнопка Отменить на установку аватара
 	pressCancelButton(uploadedAvatar, app, api, sliderGrabber, sliderBarFill)
 }
 
-function pressSendButton(imageClass, app, api) {
+function pressSendButton(imageClass, app, api, uploadedImage, sliderGrabber, sliderBarFill) {
 	if (setupAvatarBtn) {
 		setupAvatarBtn.onclick = async function () {
 			const oldPath = userAvatarBig.getAttribute('src')
@@ -113,28 +122,28 @@ function pressSendButton(imageClass, app, api) {
 			}
 
 			try {
-				const response = await api.sendRequest('post', '/test/avatarResize', body)
+				const response = await api.sendRequest('post', '/avatar/resize', body)
 				const oldImage = [...document.querySelectorAll('.users-online img')]
 				const imageList = [...messageList.querySelectorAll('img')]
 				userAvatarBig.setAttribute('src', response.path)
 				userAvatarSmall.setAttribute('src', response.path)
-				oldImage.forEach(img => {
+				oldImage.forEach((img) => {
 					const path = img.getAttribute('src')
 					if (path == oldPath) img.setAttribute('src', response.path)
 				})
-				
-				
 
 				imageList.forEach((img) => {
 					const path = img.getAttribute('src')
 					if (path == oldPath) img.setAttribute('src', response.path)
 				})
 				app.closeAvatarConfig()
+				
 			} catch (error) {
 				console.log(error)
 			}
 		}
 	}
+	resetAvatarSize(uploadedImage, sliderGrabber, sliderBarFill)
 }
 
 function pressCancelButton(uploadedImage, app, api, sliderGrabber, sliderBarFill) {
@@ -142,10 +151,14 @@ function pressCancelButton(uploadedImage, app, api, sliderGrabber, sliderBarFill
 		cancelSetupAvatarBtn.onclick = async function () {
 			const oldPath = uploadedImage.getAttribute('src')
 			app.closeAvatarConfig(false)
-			await api.sendRequest('post', '/test/avatarCancel', { path: oldPath, btn: 'cancel' })
-			sliderGrabber.removeAttribute('style')
-			sliderBarFill.style.width = '0%'
-			uploadedImage.style.transform = 'translate3d(0px, 0px, 0px)'
+			await api.sendRequest('post', '/avatar/cancel', { path: oldPath, btn: 'cancel' })
+			resetAvatarSize(uploadedImage, sliderGrabber, sliderBarFill)
 		}
 	}
+}
+
+function resetAvatarSize(uploadedImage, sliderGrabber, sliderBarFill) {
+	sliderGrabber.removeAttribute('style')
+	sliderBarFill.style.width = '0%'
+	uploadedImage.style.transform = 'translate3d(0px, 0px, 0px)'
 }

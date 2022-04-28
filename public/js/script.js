@@ -8,8 +8,7 @@ const app = new App(chatApp, usersSettingsPanel, avatarInputPanel, selectAvatar)
 const settings = new ToggleActiveClass('.user-setup-list li')
 const userCard = new ToggleActiveClass('.users-online', chatApp)
 
-
-selectAvatarInput.onchange = function() {
+selectAvatarInput.onchange = function () {
 	changeAvatar(app, api)
 }
 const usersToggleButton = document.querySelector('.users-panel-toggle')
@@ -18,9 +17,7 @@ const usersToggleButton = document.querySelector('.users-panel-toggle')
 const setupButton = usersAsidePanel.querySelector('.setup')
 const logoutButton = usersAsidePanel.querySelector('.exit')
 
-
 userCard.selectUserOnline()
-
 
 usersToggleButton.onclick = () => {
 	usersAsidePanel.classList.toggle('uk-hidden')
@@ -28,10 +25,8 @@ usersToggleButton.onclick = () => {
 	chatApp.insertAdjacentElement('beforeend', usersAsidePanel)
 }
 
-if (logoutButton) {
-	tapLogout(logoutButton)
-	openSetting(setupButton)
-}
+tapLogout(logoutButton)
+openSetting(setupButton)
 
 function tapLogout(btn) {
 	btn.onclick = () => {
@@ -70,4 +65,3 @@ function showInputForAvatarSelect() {
 avatarInputPanel.onclick = (e) => {
 	if (e.target != selectAvatarInput) return app.hideInput()
 }
-
