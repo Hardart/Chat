@@ -3,8 +3,8 @@ const express = require('express')
 const router = express.Router()
 const cleanRoomUsers = require('../middlewears/avatar/cleanRoomUsers')
 const simpleAuth = require('../middlewears/checkAuth/simple')
-const renderPage = require('../pages/index-page')
-const pagesApi = require('../controllers/route-controller')
+const renderPage = require('../controllers/route-controller')
+const pagesApi = require('../api/pages-api')
 
 
 router.get('/', cleanRoomUsers, renderPage.main)
