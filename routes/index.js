@@ -4,7 +4,7 @@ const router = express.Router()
 const cleanRoomUsers = require('../middlewears/avatar/cleanRoomUsers')
 const simpleAuth = require('../middlewears/checkAuth/simple')
 const renderPage = require('../pages/index-page')
-const pagesApi = require('../controllers/pages-controller')
+const pagesApi = require('../controllers/route-controller')
 
 
 router.get('/', cleanRoomUsers, renderPage.main)
