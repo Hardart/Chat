@@ -1,19 +1,11 @@
-const { promises: Fs } = require('fs')
-
 class RenderPage {
 	async main(req, res) {
 		const user = req.user
-		let avatar
-		try {
-			await Fs.access(`./public${user.avatar}`)
-			avatar = user.avatar
-		} catch {
-			avatar = process.env.AVATAR_PLACEHOLDER
-		}
+		
 		res.render('index', {
 			title: 'Чат',
 			username: user.name,
-			avatar: avatar,
+			avatar: req.avatar,
 			chatId: user.chatId,
 		})
 	}
